@@ -59,6 +59,19 @@ export const deleteUser = async (id) => {
 export const updateUser = (id, data) => {
   return api.post(`/user/updateUser?id=${id}`, data);
 };
+
+export const addUser = (data) => api.post("/user/addUser", data);
+
+export const getUsers = async (page = 1, limit = 10, showDeleted = false) => {
+  return await api.get("/user/getAllUsers", {
+    params: { page, limit, showDeleted }
+  });
+};
+
+export const getUserById = (userId) => {
+  return api.get(`/user/getUserById?userId=${userId}`);
+};
+
 // export const updateClient = (id, data) => {
 //   return api.post(`/client/updateClient/${id}`, data);
 // };

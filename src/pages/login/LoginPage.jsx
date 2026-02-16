@@ -145,7 +145,7 @@ const LoginPage = () => {
           "user",
           JSON.stringify(res.data.data)
         );
-        if (res.data.data.role === "admin") {
+        if (res.data.data.role === "admin" || res.data.data.role === "viewer" || res.data.data.role === "expenseEditor") {
           navigate("/home");
         } else if (res.data.data.role === "superAdmin") {
           navigate("/superadmin/home");

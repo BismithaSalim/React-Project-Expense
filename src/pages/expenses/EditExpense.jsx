@@ -279,6 +279,7 @@ const EditExpense = () => {
     clientRefId: "",
     projectRefId: "",
     category: "",
+    model:"",
     amount: "",
     vatAmount: "",
     totalAmount: 0,
@@ -305,6 +306,7 @@ const EditExpense = () => {
           clientRefId: e.clientRefId._id,
           projectRefId: e.projectRefId._id,
           category: e.category,
+          model:e.model,
           amount: e.amount,
           vatAmount: e.vat,
           totalAmount: e.totalAmount,
@@ -344,8 +346,8 @@ const EditExpense = () => {
   useEffect(() => {
     const amount = Number(formData.amount) || 0;
     const vat = Number(formData.vatAmount) || 0;
-    console.log("amount",amount)
-    console.log("vat",vat)
+    // console.log("amount",amount)
+    // console.log("vat",vat)
     setFormData(prev => ({ ...prev, totalAmount: amount + vat }));
   }, [formData.amount, formData.vatAmount]);
 
@@ -433,6 +435,14 @@ const EditExpense = () => {
               </MenuItem>
             ))}
           </TextField>
+
+          <TextField
+            label="Model"
+            name="model"
+            value={formData.model}
+            onChange={handleChange}
+            fullWidth
+          />
 
 
           <TextField

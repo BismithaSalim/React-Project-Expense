@@ -59,6 +59,11 @@ const OrganisationList = Loadable(lazy(() => import("../pages/organisation/Organ
 const SuperAdminDashboard = Loadable(lazy(() => import("../pages/superadmin/superadminDashboard")));
 const EditOrganisation = Loadable(lazy(() => import("../pages/organisation/EditOrganisation")));
 const AddOrganisationAdmin = Loadable(lazy(() => import("../pages/organisation/AddOrganisationAdmin")));
+
+//Users
+const AddUser = Loadable(lazy(() => import("../pages/users/AddUser")));
+const EditUser = Loadable(lazy(() => import("../pages/users/EditUser")));
+const UserList = Loadable(lazy(() => import("../pages/users/UserList")));
 // const MasterList = Loadable(lazy(() => import("../pages/master/MasterList")));
 // const AddEditMaster = Loadable(lazy(() => import("../pages/master/AddEditMaster")));
 
@@ -85,6 +90,9 @@ const MainRoutes = {
     { path: "/superadmin/home", element: <SuperAdminDashboard /> },
     // AppRoutes / MainRoutes
     { path: "/organisations/:id/add-admin", element: <AddOrganisationAdmin /> },
+    { path: "/users/add", element: <AddUser /> },
+    { path: "/users/list", element: <UserList /> },
+    { path: "/users/edit", element: <EditUser /> },
     // { path: "/master-data", element: <MasterList /> },
     // { path: "/master-data/add", element: <AddEditMaster /> },
     // { path: "/master-data/edit/:id", element: <AddEditMaster /> },

@@ -55,6 +55,7 @@ const AddExpense = () => {
     clientRefId: "",
     projectRefId: "",
     category: "",
+    model:"",
     amount: "",
     vat: "",
     totalAmount: 0,
@@ -86,8 +87,8 @@ const AddExpense = () => {
   useEffect(() => {
     const amount = Number(formData.amount) || 0;
     const vat = Number(formData.vat) || 0;
-    console.log("amount",amount)
-    console.log("vat",vat)
+    // console.log("amount",amount)
+    // console.log("vat",vat)
     setFormData((prev) => ({ ...prev, totalAmount: amount + vat }));
   }, [formData.amount, formData.vat]);
 
@@ -162,6 +163,13 @@ const AddExpense = () => {
               <MenuItem key={c} value={c}>{c}</MenuItem>
             ))}
           </TextField>
+
+          <TextField
+            label="Model"
+            name="model"
+            value={formData.model}
+            onChange={handleChange}
+          />
 
           <TextField
             label="Amount (w/o VAT)"

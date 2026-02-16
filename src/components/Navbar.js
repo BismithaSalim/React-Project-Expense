@@ -344,6 +344,19 @@ const menuByRole = {
   superAdmin: [
     // No menu for Organisations
   ],
+  viewer: [
+    { label: "Home", path: "/home" },
+    { label: "Clients", path: "/clients/list" },
+    { label: "Projects", path: "/projects/list" },
+    { label: "Expenses", path: "/expenses/list" },
+    { label: "Master Data", path: "/master-data" },
+  ],
+  expenseEditor:[
+    { label: "Home", path: "/home" },
+    { label: "Clients", path: "/clients/list" },
+    { label: "Projects", path: "/projects/list" },
+    { label: "Expenses", path: "/expenses/list" },
+  ]
 };
 
 const Navbar = () => {
@@ -353,9 +366,13 @@ const Navbar = () => {
   const pathname = location.pathname;
 
   // Determine Home page based on role
+  // const isHomePage =
+  //   (pathname === "/home" && role === "admin" || "viewer") ||
+  //   (pathname === "/superadmin/home" && role === "superAdmin");
   const isHomePage =
-    (pathname === "/home" && role === "admin") ||
-    (pathname === "/superadmin/home" && role === "superAdmin");
+  ((pathname === "/home") && (role === "admin" || role === "viewer" || role === "expenseEditor")) ||
+  ((pathname === "/superadmin/home") && (role === "superAdmin"));
+
 
   // Determine Add/Edit pages
   const isAddEditPage = pathname.includes("/add") || pathname.includes("/edit");
@@ -397,8 +414,9 @@ const Navbar = () => {
           <Button
             variant="contained"
             onClick={() =>
-              role === "admin" ? navigate("/home") : navigate("/superadmin/home")
+              role === "admin" || role === "viewer" || role === "expenseEditor" ? navigate("/home") : navigate("/superadmin/home")
             }
+
             sx={{
               backgroundColor: "#0D47A1",
               "&:hover": { backgroundColor: "#0B3C91" },

@@ -321,6 +321,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getProjects, deleteProject } from "../../services/api";
+import { getRole } from "../../utils/auth";
 
 const ProjectList = () => {
   const navigate = useNavigate();
@@ -331,6 +332,8 @@ const ProjectList = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalCount, setTotalCount] = useState(0);
   const [showDeleted, setShowDeleted] = useState(false); // new
+
+  const role = getRole();
 
   const fetchProjects = useCallback(async () => {
     try {
@@ -388,9 +391,12 @@ const ProjectList = () => {
             }
             label="Show Deleted"
           />
+
+          {role !== "viewer" && role !== "expenseEditor" && (
           <Button variant="contained" onClick={() => navigate("/projects/add")}>
             Add Project
           </Button>
+          )}
         </Stack>
       </Stack>
 
@@ -437,6 +443,7 @@ const ProjectList = () => {
                           color="primary"
                           onClick={() => navigate(`/projects/edit?id=${project._id}`)}
                           title="Edit Project"
+                          disabled={role === "viewer" || role === "expenseEditor"}
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>
@@ -446,6 +453,7 @@ const ProjectList = () => {
                           color={project.isActive ? "error" : "success"}
                           onClick={() => handleDeleteRestore(project._id)}
                           title={project.isActive ? "Delete Project" : "Restore Project"}
+                          disabled={role === "viewer" || role === "expenseEditor"}
                         >
                           <DeleteIcon fontSize="small" />
                         </IconButton>

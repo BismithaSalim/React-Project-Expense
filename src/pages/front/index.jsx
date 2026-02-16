@@ -79,7 +79,13 @@ const FrontPage = () => {
       description: "Overall financial summary of all projects",
       icon: <AssessmentIcon fontSize="large" />,
       route: "/projects/summary"
-   }
+   },
+   {
+      title: "Users",
+      description: "Manage your users and their details",
+      icon: <PeopleIcon fontSize="large" />,
+      route: "/users/list"
+    },
   ];
 
   return (

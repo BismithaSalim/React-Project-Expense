@@ -406,6 +406,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { getClients, deleteClient } from "../../services/api";
+import { getRole } from "../../utils/auth";
 
 const ClientList = () => {
   const navigate = useNavigate();
@@ -417,6 +418,8 @@ const ClientList = () => {
   const [totalClients, setTotalClients] = useState(0);
 
   const [showDeleted, setShowDeleted] = useState(false);
+
+  const role = getRole();
 
   // Fetch clients
   const fetchClients = useCallback(
@@ -484,9 +487,11 @@ const ClientList = () => {
             }
             label="Show Deleted"
           />
+          {role !== "viewer" && role !== "expenseEditor" && (
           <Button variant="contained" color="primary" onClick={() => navigate("/clients/add")}>
             Add Client
           </Button>
+          )}
         </Stack>
       </Stack>
 
@@ -522,12 +527,14 @@ const ClientList = () => {
                           <IconButton
                             color="primary"
                             onClick={() => navigate(`/clients/edit?id=${client._id}`)}
+                            disabled={role === "viewer" || role === "expenseEditor"}
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
                             color={client.isActive ? "error" : "success"}
                             onClick={() => handleDeleteRestoreClient(client._id, client.isActive)}
+                            disabled={role === "viewer" || role === "expenseEditor"}
                           >
                             <DeleteIcon />
                           </IconButton>

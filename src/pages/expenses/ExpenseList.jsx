@@ -679,11 +679,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getExpenses, deleteExpense } from "../../services/api";
+import { getRole } from "../../utils/auth";
 
 const ExpenseList = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const role = getRole();
   // Read initial showDeleted from query param
   const query = new URLSearchParams(location.search);
   const initialShowDeleted = query.get("showDeleted") === "true";
@@ -772,6 +773,7 @@ const ExpenseList = () => {
             label={showDeleted ? "Showing Deleted" : "Showing Active"}
           />
 
+      {role !== "viewer" && role !== "expenseEditor" && (
           <Button
             variant="contained"
             color="primary"
@@ -779,6 +781,7 @@ const ExpenseList = () => {
           >
             Add Expense
           </Button>
+      )}
         </Stack>
       </Stack>
 
@@ -796,6 +799,7 @@ const ExpenseList = () => {
                   <TableCell sx={th(15)}>Client</TableCell>
                   <TableCell sx={th(15)}>Project</TableCell>
                   <TableCell sx={th(15)}>Category</TableCell>
+                  <TableCell sx={th(15)}>Model</TableCell>
                   <TableCell sx={th(8)} align="right">Amount</TableCell>
                   <TableCell sx={th(8)} align="right">VAT</TableCell>
                   <TableCell sx={th(10)} align="right">Total</TableCell>
@@ -817,6 +821,7 @@ const ExpenseList = () => {
                       <TableCell sx={td}>{e.clientRefId?.clientName}</TableCell>
                       <TableCell sx={td}>{e.projectRefId?.projectName}</TableCell>
                       <TableCell sx={td}>{e.category}</TableCell>
+                      <TableCell sx={td}>{e.model}</TableCell>
                       <TableCell sx={td} align="right">{e.amount}</TableCell>
                       <TableCell sx={td} align="right">{e.vat}</TableCell>
                       <TableCell sx={td} align="right">{e.totalAmount}</TableCell>
@@ -825,6 +830,7 @@ const ExpenseList = () => {
                           size="small"
                           color="primary"
                           onClick={() => navigate(`/expenses/edit?id=${e._id}`)}
+                          disabled={role === "viewer"}
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>
@@ -834,6 +840,7 @@ const ExpenseList = () => {
                           color={e.isActive ? "error" : "success"}
                           onClick={() => handleDeleteRestore(e._id)}
                           title={e.isActive ? "Delete Expense" : "Restore Expense"}
+                          disabled={role === "viewer" || role === "expenseEditor"}
                         >
                           <DeleteIcon fontSize="small" />
                         </IconButton>
