@@ -64,8 +64,8 @@ const AddOrganisationAdmin = Loadable(lazy(() => import("../pages/organisation/A
 const AddUser = Loadable(lazy(() => import("../pages/users/AddUser")));
 const EditUser = Loadable(lazy(() => import("../pages/users/EditUser")));
 const UserList = Loadable(lazy(() => import("../pages/users/UserList")));
-// const MasterList = Loadable(lazy(() => import("../pages/master/MasterList")));
-// const AddEditMaster = Loadable(lazy(() => import("../pages/master/AddEditMaster")));
+const MasterList = Loadable(lazy(() => import("../pages/master/MasterList")));
+const AddEditMaster = Loadable(lazy(() => import("../pages/master/AddEditMaster")));
 
 const MainRoutes = {
   element: MainLayout, // just the component, not <MainLayout />
@@ -93,9 +93,9 @@ const MainRoutes = {
     { path: "/users/add", element: <AddUser /> },
     { path: "/users/list", element: <UserList /> },
     { path: "/users/edit", element: <EditUser /> },
-    // { path: "/master-data", element: <MasterList /> },
-    // { path: "/master-data/add", element: <AddEditMaster /> },
-    // { path: "/master-data/edit/:id", element: <AddEditMaster /> },
+    { path: "/master-data", element: <MasterList /> },
+    { path: "/master-data/add", element: <AddEditMaster /> },
+    { path: "/master-data/edit/:id", element: <AddEditMaster /> },
 
   ],
 };

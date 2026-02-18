@@ -268,11 +268,32 @@ const AddProject = () => {
       }
     } catch (err) {
       console.error(err);
-      setSnackbar({
-        open: true,
-        message: "Error adding project",
-        severity: "error"
-      });
+
+      if (err.response?.data?.status === 102) {
+          setSnackbar({
+            open: true,
+            message: "Project already exist",
+            severity: "error"
+          });
+        } else if (err.response?.data?.errorDetails) {
+          setSnackbar({
+            open: true,
+            message:err.response.data.errorDetails,
+            severity: "error"
+          });
+        } else {
+          setSnackbar({
+            open: true,
+            message:"Failed to add client",
+            severity: "error"
+          });
+        }
+
+      // setSnackbar({
+      //   open: true,
+      //   message: "Error adding project",
+      //   severity: "error"
+      // });
     }
   };
 

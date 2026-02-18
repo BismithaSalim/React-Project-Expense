@@ -334,11 +334,25 @@ const AddClient = () => {
       setTimeout(() => {
         navigate("/clients/list");
       }, 1000);
+      
     } catch (err) {
-      console.error(err);
-      setSnackbarMessage("Failed to add client");
-      setSnackbarSeverity("error");
-      setSnackbarOpen(true);
+
+      // console.error(err);
+    
+        if (err.response?.data?.status === 102) {
+          setSnackbarMessage("Client already exists");
+        } else if (err.response?.data?.errorDetails) {
+          setSnackbarMessage(err.response.data.errorDetails);
+        } else {
+          setSnackbarMessage("Failed to add client");
+        }
+
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
+      // console.error(err);
+      // setSnackbarMessage("Failed to add client");
+      // setSnackbarSeverity("error");
+      // setSnackbarOpen(true);
     } finally {
       setLoading(false);
     }

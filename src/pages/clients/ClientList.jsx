@@ -399,6 +399,7 @@ import {
   Stack,
   TablePagination,
   IconButton,
+  TextField,
   Switch,
   FormControlLabel
 } from "@mui/material";
@@ -414,10 +415,12 @@ const ClientList = () => {
   const [loading, setLoading] = useState(true);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalClients, setTotalClients] = useState(0);
 
   const [showDeleted, setShowDeleted] = useState(false);
+
+  const [search, setSearch] = useState("");
 
   const role = getRole();
 
@@ -426,10 +429,10 @@ const ClientList = () => {
     async (pageNumber = page, pageSize = rowsPerPage) => {
       try {
         setLoading(true);
-        const response = await getClients(pageNumber + 1, pageSize, showDeleted);
+        const response = await getClients(pageNumber + 1, pageSize, showDeleted,search);
 
         setClients(response.data.data || []);
-        setTotalClients(response.data.data.pagination?.totalRecords || response.data.data.length || 0);
+        setTotalClients(response.data?.totalCount || response.data.data.length || 0);
       } catch (err) {
         console.error(err);
         alert("Failed to fetch clients");
@@ -437,7 +440,7 @@ const ClientList = () => {
         setLoading(false);
       }
     },
-    [page, rowsPerPage, showDeleted]
+    [page, rowsPerPage, showDeleted,search]
   );
 
   useEffect(() => {
@@ -474,6 +477,15 @@ const ClientList = () => {
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
         <Typography variant="h4">Clients</Typography>
         <Stack direction="row" spacing={2} alignItems="center">
+          <TextField
+                        size="small"
+                        placeholder="Search clients..."
+                        value={search}
+                        onChange={(e) => {
+                          setSearch(e.target.value);
+                          setPage(0);
+                        }}
+                      />
           <FormControlLabel
             control={
               <Switch
@@ -554,7 +566,7 @@ const ClientList = () => {
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 10, 25, 50]}
+            rowsPerPageOptions={[10, 25, 50, 100]}
           />
         </Paper>
       )}

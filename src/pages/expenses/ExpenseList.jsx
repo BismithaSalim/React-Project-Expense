@@ -694,7 +694,7 @@ const ExpenseList = () => {
   const [showDeleted, setShowDeleted] = useState(initialShowDeleted);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
 
   // Fetch expenses
@@ -703,7 +703,7 @@ const ExpenseList = () => {
       setLoading(true);
       const res = await getExpenses(page + 1, rowsPerPage, showDeleted);
       setExpenses(res.data.data || []);
-      setTotalCount(res.data.pagination?.totalRecords || res.data.data.length || 0);
+      setTotalCount(res.data.totalCount || res.data.data.length || 0);
     } catch (err) {
       console.error(err);
       alert("Failed to fetch expenses");
@@ -859,7 +859,7 @@ const ExpenseList = () => {
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 10, 20]}
+            rowsPerPageOptions={[10, 25, 50, 100]}
           />
         </Paper>
       )}

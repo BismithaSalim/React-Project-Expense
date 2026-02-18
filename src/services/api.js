@@ -35,9 +35,9 @@ export const addClient = (data) => api.post("/client/addClient", data);
 // export const getClients = (page = 1, limit = 10) =>
 //   api.get(`/client/getAllClients?page=${page}&limit=${limit}`);
 
-export const getClients = async (page = 1, limit = 10, showDeleted = false) => {
+export const getClients = async (page = 1, limit = 10, showDeleted = false,search) => {
   return await api.get("/client/getAllClients", {
-    params: { page, limit, showDeleted }
+    params: { page, limit, showDeleted,search }
   });
 };
 
@@ -91,9 +91,9 @@ export const updateProject = (id, data) => {
   return api.post(`/project/updateProject?id=${id}`, data);
 };
 // Add showDeleted parameter
-export const getProjects = async (page = 1, limit = 5, showDeleted = false) => {
+export const getProjects = async (page = 1, limit = 5, showDeleted = false, search) => {
   return await api.get("/project/getAllProjects", {
-    params: { page, limit, showDeleted }
+    params: { page, limit, showDeleted,search }
   });
 };
 // Delete/Restore project
@@ -184,6 +184,35 @@ export const addOrganisationAdmin = async (orgId, data) => {
 
 export const getAdminByOrganisation = async (orgId, data) => {
   return await api.get(`/user/${orgId}/getAdminByOrganisation`, data);
+};
+
+
+///////////////////////////--Master APIs--//////////////////////////////
+ 
+export const addMasterData = async (data) => {
+  return await api.post("/master/addMaster", data);
+};
+
+export const getMasterData = async (showDeleted = false, page = 1, limit = 10) => {
+  return await api.get("/master/getAllMasters", {
+    params: { showDeleted, page, limit }
+  });
+};
+
+export const getMasterDataById = async (id) => {
+  return await api.get(`/master/getMasterById?id=${id}`);
+};
+
+export const getMasterDataByCategory = async () => {
+  return await api.get("/master/getMasterByCategory")
+};
+
+export const updateMasterData = async (id, data) => {
+  return await api.put(`/master/updateMaster?id=${id}`, data);
+};
+
+export const deleteMasterData = async (id) => {
+  return await api.patch(`/master/deleteMaster/${id}`);
 };
 
 export default api;

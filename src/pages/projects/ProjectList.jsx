@@ -310,6 +310,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   CircularProgress,
   Stack,
   TablePagination,
@@ -322,6 +323,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getProjects, deleteProject } from "../../services/api";
 import { getRole } from "../../utils/auth";
+// import QuickLinks from "../../components/QuickLinks";
 
 const ProjectList = () => {
   const navigate = useNavigate();
@@ -329,25 +331,27 @@ const ProjectList = () => {
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(0); // 0-based
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const [totalCount, setTotalCount] = useState(0);
   const [showDeleted, setShowDeleted] = useState(false); // new
+  const [search, setSearch] = useState("");
 
   const role = getRole();
 
   const fetchProjects = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await getProjects(page + 1, rowsPerPage, showDeleted);
+      const response = await getProjects(page + 1, rowsPerPage, showDeleted,search);
       setProjects(response.data.data || []);
-      setTotalCount(response.data.pagination?.totalRecords || 0);
+      setTotalCount(response.data?.totalCount || 0);
+      // setTotalCount(response.data.pagination?.totalRecords || 0);
     } catch (err) {
       console.error(err);
       alert("Failed to fetch projects");
     } finally {
       setLoading(false);
     }
-  }, [page, rowsPerPage, showDeleted]);
+  }, [page, rowsPerPage, showDeleted,search]);
 
   useEffect(() => {
     fetchProjects();
@@ -381,6 +385,16 @@ const ProjectList = () => {
       <Stack direction="row" justifyContent="space-between" mb={3}>
         <Typography variant="h4">Projects</Typography>
         <Stack direction="row" spacing={2} alignItems="center">
+          <TextField
+              size="small"
+              placeholder="Search projects..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(0);
+              }}
+            />
+
           <FormControlLabel
             control={
               <Switch
@@ -406,6 +420,7 @@ const ProjectList = () => {
         </Box>
       ) : (
         <Paper sx={{ boxShadow: 6 }}>
+          {/* <QuickLinks /> */}
           <TableContainer>
             <Table>
               <TableHead sx={{ bgcolor: "primary.main" }}>
@@ -482,7 +497,7 @@ const ProjectList = () => {
             onPageChange={handleChangePage}
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 10, 20, 50]}
+            rowsPerPageOptions={[10, 25, 50, 100]}
           />
         </Paper>
       )}

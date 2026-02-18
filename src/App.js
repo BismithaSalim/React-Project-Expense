@@ -137,13 +137,13 @@
 
 
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainRoutes from "./routes/MainRoutes";
 import LoginPage from "./pages/login/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function AppContent() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
  useEffect(() => {
   const handleStorageChange = (event) => {

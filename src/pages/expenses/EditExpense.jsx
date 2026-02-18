@@ -236,7 +236,7 @@ import {
   Typography
 } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getClients, getProjectsByClient, getExpenseById, updateExpense } from "../../services/api";
+import { getClients, getProjectsByClient, getExpenseById, updateExpense, getMasterDataByCategory } from "../../services/api";
 
 const EditExpense = () => {
   const navigate = useNavigate();
@@ -249,31 +249,32 @@ const EditExpense = () => {
   const [clients, setClients] = useState([]);
   const [projects, setProjects] = useState([]);
 
-  const categories = [
-  "Cameras",
-  "Access Control",
-  "NVR",
-  "Switch",
-  "TV",
-  "Computer",
-  "HDD",
-  "Cable",
-  "Accessories",
-  "Tools",
-  "IT Equipment",
-  "Software",
-  "Product - Others",
-  "Services - Rental",
-  "Services - Wages",
-  "Services - Civil Work",
-  "Services - Others",
-  "Logistics - Food",
-  "Logistics - Travel",
-  "Logistics - Others",
-  "Overheads - Bonus",
-  "Overheads - Business"
- ];
+//   const categories = [
+//   "Cameras",
+//   "Access Control",
+//   "NVR",
+//   "Switch",
+//   "TV",
+//   "Computer",
+//   "HDD",
+//   "Cable",
+//   "Accessories",
+//   "Tools",
+//   "IT Equipment",
+//   "Software",
+//   "Product - Others",
+//   "Services - Rental",
+//   "Services - Wages",
+//   "Services - Civil Work",
+//   "Services - Others",
+//   "Logistics - Food",
+//   "Logistics - Travel",
+//   "Logistics - Others",
+//   "Overheads - Bonus",
+//   "Overheads - Business"
+//  ];
 
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     date: new Date().toISOString().substr(0, 10),
     clientRefId: "",
@@ -351,6 +352,21 @@ const EditExpense = () => {
     setFormData(prev => ({ ...prev, totalAmount: amount + vat }));
   }, [formData.amount, formData.vatAmount]);
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await getMasterDataByCategory("category"); 
+        // If your backend expects "category" as type
+        setCategories(res.data.data || []);
+      } catch (err) {
+        console.error("Failed to fetch categories", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -421,7 +437,7 @@ const EditExpense = () => {
             fullWidth
           /> */}
 
-          <TextField
+          {/* <TextField
             select
             label="Category"
             name="category"
@@ -432,6 +448,21 @@ const EditExpense = () => {
             {categories.map((cat) => (
               <MenuItem key={cat} value={cat}>
                 {cat}
+              </MenuItem>
+            ))}
+          </TextField> */}
+
+          <TextField
+            select
+            label="Category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            fullWidth
+          >
+            {categories.map((cat) => (
+              <MenuItem key={cat._id} value={cat.name}>
+                {cat.name}
               </MenuItem>
             ))}
           </TextField>
