@@ -193,9 +193,9 @@ export const addMasterData = async (data) => {
   return await api.post("/master/addMaster", data);
 };
 
-export const getMasterData = async (showDeleted = false, page = 1, limit = 10) => {
+export const getMasterData = async (page = 1, limit = 10,search) => {
   return await api.get("/master/getAllMasters", {
-    params: { showDeleted, page, limit }
+    params: { page, limit,search }
   });
 };
 
