@@ -244,7 +244,7 @@ import {
   Paper,
   Typography,
   Stack,
-  CircularProgress,
+  CircularProgress
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
@@ -252,13 +252,18 @@ import { loginUser } from "../../services/api";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const SITE_KEY = "6LfWY20sAAAAAKwSmuNdUP--V0b0b8Y9SzHhCnAI"
+// "6LfWY20sAAAAAKwSmuNdUP--V0b0b8Y9SzHhCnAI"
 // process.env.SITE_KEY;
-console.log("site key",SITE_KEY)
+// console.log("site key",SITE_KEY)
 const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ userName: "", password: "" });
   const [captchaValue, setCaptchaValue] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // const [setSnackbarOpen] = useState(false);
+  // const [setSnackbarMessage] = useState("");
+  // const [setSnackbarSeverity] = useState("success");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -301,6 +306,10 @@ const LoginPage = () => {
     } catch (err) {
       console.error(err);
       alert("Login failed!");
+      // setSnackbarMessage(err.response?.data?.message || "Login failed!");
+      // setSnackbarSeverity("error");
+      // setSnackbarOpen(true);
+
     } finally {
       setLoading(false);
     }

@@ -335,10 +335,7 @@ const AddClient = () => {
         navigate("/clients/list");
       }, 1000);
       
-    } catch (err) {
-
-      // console.error(err);
-    
+    } catch (err) { 
         if (err.response?.data?.status === 102) {
           setSnackbarMessage("Client already exists");
         } else if (err.response?.data?.errorDetails) {

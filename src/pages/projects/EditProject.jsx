@@ -209,7 +209,7 @@ const EditProject = () => {
             onChange={handleChange}
             fullWidth
           >
-            {["Not Started", "In Progress", "Completed"].map((status) => (
+            {["Not Started", "In Progress", "Completed","Accepted"].map((status) => (
               <MenuItem key={status} value={status}>
                 {status}
               </MenuItem>

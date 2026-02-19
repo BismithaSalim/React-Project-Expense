@@ -5,7 +5,7 @@ import { addMasterData, updateMasterData, getMasterDataById } from "../../servic
 
 const AddEditMasterData = () => {
   const { id } = useParams(); // undefined for add
-  const [form, setForm] = useState({ type: "", name: "" });
+  const [form, setForm] = useState({ type: "Category", name: "" });
   const [types] = useState(["Category"]);
   const navigate = useNavigate();
 
