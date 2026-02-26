@@ -250,6 +250,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/api";
 import ReCAPTCHA from "react-google-recaptcha";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const SITE_KEY = "6LfWY20sAAAAAKwSmuNdUP--V0b0b8Y9SzHhCnAI"
 // "6LfWY20sAAAAAKwSmuNdUP--V0b0b8Y9SzHhCnAI"
@@ -260,6 +264,7 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ userName: "", password: "" });
   const [captchaValue, setCaptchaValue] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // const [setSnackbarOpen] = useState(false);
   // const [setSnackbarMessage] = useState("");
@@ -355,13 +360,35 @@ const LoginPage = () => {
             autoFocus
           />
 
-          <TextField
+          {/* <TextField
             label="Password"
             type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             fullWidth
+          /> */}
+
+          <TextField
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    onMouseDown={(e) => e.preventDefault()} // 🔥 Fix for Safari / Apple
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
 
           {/* CAPTCHA */}
