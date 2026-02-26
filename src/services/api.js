@@ -246,9 +246,9 @@ export const getServices = async (showDeleted = false) => {
   });
 };
 
-export const getProject = async (page = 1, limit = 5, showDeleted = false, search) => {
+export const getProject = async (showDeleted = false, search) => {
   return await api.get("/project/getProjects", {
-    params: { page, limit, showDeleted,search }
+    params: {showDeleted,search }
   });
 };
 
