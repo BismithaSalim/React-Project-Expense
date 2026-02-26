@@ -906,15 +906,32 @@ const CostCalculation = () => {
   // ==============================
   // HANDLE QTY / MARGIN CHANGE
   // ==============================
-  const handleServiceChange = (index, field, value) => {
-    const updated = [...formData.services];
-    if (field === "margin" && value < 30) value = 30;
-    updated[index][field] = value;
+//   const handleServiceChange = (index, field, value) => {
+//     const updated = [...formData.services];
+//     if (field === "margin" && value < 30) value = 30;
+//     updated[index][field] = value;
 
-    const { rate, quantity, margin } = updated[index];
-    updated[index].amount = calculateAmount(rate, Number(quantity), Number(margin));
-    setFormData({ ...formData, services: updated });
-  };
+//     const { rate, quantity, margin } = updated[index];
+//     updated[index].amount = calculateAmount(rate, Number(quantity), Number(margin));
+//     setFormData({ ...formData, services: updated });
+//   };
+
+const handleServiceChange = (index, field, value) => {
+  const updated = [...formData.services];
+
+  // just update the value, no forced 30 here
+  updated[index][field] = value;
+
+  const qty = updated[index].quantity === "" ? 0 : Number(updated[index].quantity);
+  const mgn = updated[index].margin === "" ? 30 : Number(updated[index].margin);
+  const rate = updated[index].rate || 0;
+
+  updated[index].amount = calculateAmount(rate, qty, mgn);
+
+  setFormData({ ...formData, services: updated });
+};
+
+
 
   // ==============================
   // DELETE SERVICE
@@ -1233,7 +1250,7 @@ const CostCalculation = () => {
                   <TableCell>{item.rate}</TableCell>
                   <TableCell>{item.unit}</TableCell>
                   <TableCell>
-                    <TextField
+                    {/* <TextField
                       type="number"
                       size="small"
                       value={item.quantity}
@@ -1245,10 +1262,43 @@ const CostCalculation = () => {
                           Number(e.target.value)
                         )
                       }
-                    />
+                    /> */}
+
+                    <TextField
+  type="number"
+  size="small"
+  value={item.quantity}
+  InputProps={role === "admin" ? { readOnly: true } : {}}
+  inputProps={{
+    inputMode: "numeric",
+    pattern: "[0-9]*",
+  }}
+  sx={{
+    "& input[type=number]::-webkit-outer-spin-button": {
+      WebkitAppearance: "none",
+      margin: 0,
+    },
+    "& input[type=number]::-webkit-inner-spin-button": {
+      WebkitAppearance: "none",
+      margin: 0,
+    },
+    "& input[type=number]": {
+      MozAppearance: "textfield",
+    },
+  }}
+  onChange={(e) =>
+    handleServiceChange(
+      index,
+      "quantity",
+      e.target.value // <-- pass value as string, not Number()
+    )
+  }
+/>
+
+
                   </TableCell>
                   <TableCell>
-                    <TextField
+                    {/* <TextField
                       type="number"
                       size="small"
                       inputProps={{ min: 30 }}
@@ -1261,7 +1311,35 @@ const CostCalculation = () => {
                           Number(e.target.value)
                         )
                       }
+                    /> */}
+
+                    <TextField
+                    type="number"
+                    size="small"
+                    value={item.margin}
+                    inputProps={{
+                        inputMode: "numeric",
+                        pattern: "[0-9]*",
+                        min: 0, // temporarily allow typing below 30
+                    }}
+                    InputProps={role === "admin" ? { readOnly: true } : {}}
+                    sx={{
+                        "& input[type=number]::-webkit-outer-spin-button": { WebkitAppearance: "none", margin: 0 },
+                        "& input[type=number]::-webkit-inner-spin-button": { WebkitAppearance: "none", margin: 0 },
+                        "& input[type=number]": { MozAppearance: "textfield" },
+                    }}
+                    onChange={(e) =>
+                        handleServiceChange(index, "margin", e.target.value)
+                    }
+                    onBlur={(e) => {
+                        // enforce minimum 30 when user leaves the field
+                        if (!e.target.value || Number(e.target.value) < 30) {
+                        handleServiceChange(index, "margin", 30);
+                        }
+                    }}
                     />
+
+
                   </TableCell>
                   <TableCell>
                     <strong>{(item.amount || 0).toFixed(3)}</strong>

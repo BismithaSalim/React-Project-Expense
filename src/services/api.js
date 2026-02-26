@@ -241,7 +241,7 @@ export const deleteRateMaster = async (id) => {
 };
 
 export const getServices = async (showDeleted = false) => {
-  return await api.get("/master/getRateMasters", {
+  return await api.get("/master/getRateMaster", {
     params: { showDeleted }
   });
 };
