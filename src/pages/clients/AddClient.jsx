@@ -273,6 +273,169 @@
 
 // export default AddClient;
 
+//////////////////////////////After Third deployment//////////////////////////////////
+// import React, { useState } from "react";
+// import {
+//   TextField,
+//   Button,
+//   Paper,
+//   Stack,
+//   Typography,
+//   Snackbar,
+//   Alert,
+//   FormControl,
+//   InputLabel,
+//   Select,
+//   MenuItem,
+// } from "@mui/material";
+// import { useNavigate } from "react-router-dom";
+// import { addClient } from "../../services/api";
+
+// const AddClient = () => {
+//   const navigate = useNavigate();
+
+//   const [clientName, setClientName] = useState("");
+//   const [type, setClientType] = useState("");
+//   const [otherType, setOtherType] = useState(""); // new state for "Other"
+//   const [status, setStatus] = useState("");
+//   const [loading, setLoading] = useState(false);
+
+//   const [snackbarOpen, setSnackbarOpen] = useState(false);
+//   const [snackbarMessage, setSnackbarMessage] = useState("");
+//   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+//   const handleSubmit = async () => {
+//     let finalType = type;
+//     if (type === "Others") {
+//       if (!otherType.trim()) {
+//         setSnackbarMessage("Please specify the type");
+//         setSnackbarSeverity("error");
+//         setSnackbarOpen(true);
+//         return;
+//       }
+//       finalType = otherType.trim(); // use the user-provided type
+//     }
+
+//     if (!clientName || !finalType || !status) {
+//       setSnackbarMessage("Please fill all fields");
+//       setSnackbarSeverity("error");
+//       setSnackbarOpen(true);
+//       return;
+//     }
+
+//     try {
+//       setLoading(true);
+//       await addClient({ clientName, type: finalType, status });
+
+//       setSnackbarMessage("Client added successfully");
+//       setSnackbarSeverity("success");
+//       setSnackbarOpen(true);
+
+//       setTimeout(() => {
+//         navigate("/clients/list");
+//       }, 1000);
+      
+//     } catch (err) { 
+//         if (err.response?.data?.status === 102) {
+//           setSnackbarMessage("Client already exists");
+//         } else if (err.response?.data?.errorDetails) {
+//           setSnackbarMessage(err.response.data.errorDetails);
+//         } else {
+//           setSnackbarMessage("Failed to add client");
+//         }
+
+//         setSnackbarSeverity("error");
+//         setSnackbarOpen(true);
+//       // console.error(err);
+//       // setSnackbarMessage("Failed to add client");
+//       // setSnackbarSeverity("error");
+//       // setSnackbarOpen(true);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <Paper sx={{ p: 4, maxWidth: 500, margin: "50px auto" }}>
+//       <Stack spacing={3}>
+//         <Typography variant="h4">Add Client</Typography>
+
+//         {/* Client Name */}
+//         <TextField
+//           label="Client Name"
+//           value={clientName}
+//           onChange={(e) => setClientName(e.target.value)}
+//           fullWidth
+//         />
+
+//         {/* Client Type */}
+//         <FormControl fullWidth>
+//           <InputLabel>Type</InputLabel>
+//           <Select
+//             value={type}
+//             label="Type"
+//             onChange={(e) => setClientType(e.target.value)}
+//           >
+//             <MenuItem value="Ministry">Ministry</MenuItem>
+//             <MenuItem value="Government">Government</MenuItem>
+//             <MenuItem value="Semi Government">Semi Government</MenuItem>
+//             <MenuItem value="Private - Large Enterprise">Private - Large Enterprise</MenuItem>
+//             <MenuItem value="SM - Enterprise">SM - Enterprise</MenuItem>
+//             <MenuItem value="Retail">Retail</MenuItem>
+//             <MenuItem value="Villa">Villa</MenuItem>
+//             <MenuItem value="Others">Others</MenuItem>
+//           </Select>
+//         </FormControl>
+
+//         {/* Show input only if "Others" is selected */}
+//         {type === "Others" && (
+//           <TextField
+//             label="Specify Type"
+//             value={otherType}
+//             onChange={(e) => setOtherType(e.target.value)}
+//             fullWidth
+//           />
+//         )}
+
+//         {/* Status */}
+//         <FormControl fullWidth>
+//           <InputLabel>Status</InputLabel>
+//           <Select
+//             value={status}
+//             label="Status"
+//             onChange={(e) => setStatus(e.target.value)}
+//           >
+//             <MenuItem value="Existing">Existing</MenuItem>
+//             <MenuItem value="Potential">Potential</MenuItem>
+//           </Select>
+//         </FormControl>
+
+//         <Button variant="contained" onClick={handleSubmit} disabled={loading}>
+//           {loading ? "Saving..." : "Save Client"}
+//         </Button>
+//       </Stack>
+
+//       {/* Snackbar */}
+//       <Snackbar
+//         open={snackbarOpen}
+//         autoHideDuration={3000}
+//         onClose={() => setSnackbarOpen(false)}
+//         anchorOrigin={{ vertical: "top", horizontal: "center" }}
+//       >
+//         <Alert
+//           onClose={() => setSnackbarOpen(false)}
+//           severity={snackbarSeverity}
+//           sx={{ width: "100%" }}
+//         >
+//           {snackbarMessage}
+//         </Alert>
+//       </Snackbar>
+//     </Paper>
+//   );
+// };
+
+// export default AddClient;
+
 
 import React, { useState } from "react";
 import {
@@ -296,36 +459,34 @@ const AddClient = () => {
 
   const [clientName, setClientName] = useState("");
   const [type, setClientType] = useState("");
-  const [otherType, setOtherType] = useState(""); // new state for "Other"
+  const [otherType, setOtherType] = useState(""); // for "Others"
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [errors, setErrors] = useState({});
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleSubmit = async () => {
-    let finalType = type;
-    if (type === "Others") {
-      if (!otherType.trim()) {
-        setSnackbarMessage("Please specify the type");
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-        return;
-      }
-      finalType = otherType.trim(); // use the user-provided type
-    }
+    // Frontend validation
+    const newErrors = {};
+    if (!clientName.trim()) newErrors.clientName = "Client Name is required";
+    if (!type) newErrors.type = "Type is required";
+    if (type === "Others" && !otherType.trim())
+      newErrors.otherType = "Please specify the type";
+    if (!status) newErrors.status = "Status is required";
 
-    if (!clientName || !finalType || !status) {
-      setSnackbarMessage("Please fill all fields");
-      setSnackbarSeverity("error");
-      setSnackbarOpen(true);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
+    let finalType = type === "Others" ? otherType.trim() : type;
+
     try {
       setLoading(true);
-      await addClient({ clientName, type: finalType, status });
+      await addClient({ clientName: clientName.trim(), type: finalType, status });
 
       setSnackbarMessage("Client added successfully");
       setSnackbarSeverity("success");
@@ -334,22 +495,16 @@ const AddClient = () => {
       setTimeout(() => {
         navigate("/clients/list");
       }, 1000);
-      
-    } catch (err) { 
-        if (err.response?.data?.status === 102) {
-          setSnackbarMessage("Client already exists");
-        } else if (err.response?.data?.errorDetails) {
-          setSnackbarMessage(err.response.data.errorDetails);
-        } else {
-          setSnackbarMessage("Failed to add client");
-        }
-
-        setSnackbarSeverity("error");
-        setSnackbarOpen(true);
-      // console.error(err);
-      // setSnackbarMessage("Failed to add client");
-      // setSnackbarSeverity("error");
-      // setSnackbarOpen(true);
+    } catch (err) {
+      if (err.response?.data?.status === 102) {
+        setSnackbarMessage("Client already exists");
+      } else if (err.response?.data?.errorDetails) {
+        setSnackbarMessage(err.response.data.errorDetails);
+      } else {
+        setSnackbarMessage("Failed to add client");
+      }
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setLoading(false);
     }
@@ -364,17 +519,25 @@ const AddClient = () => {
         <TextField
           label="Client Name"
           value={clientName}
-          onChange={(e) => setClientName(e.target.value)}
+          onChange={(e) => {
+            setClientName(e.target.value);
+            setErrors(prev => ({ ...prev, clientName: "" }));
+          }}
           fullWidth
+          error={!!errors.clientName}
+          helperText={errors.clientName}
         />
 
         {/* Client Type */}
-        <FormControl fullWidth>
+        <FormControl fullWidth error={!!errors.type}>
           <InputLabel>Type</InputLabel>
           <Select
             value={type}
             label="Type"
-            onChange={(e) => setClientType(e.target.value)}
+            onChange={(e) => {
+              setClientType(e.target.value);
+              setErrors(prev => ({ ...prev, type: "" }));
+            }}
           >
             <MenuItem value="Ministry">Ministry</MenuItem>
             <MenuItem value="Government">Government</MenuItem>
@@ -385,6 +548,11 @@ const AddClient = () => {
             <MenuItem value="Villa">Villa</MenuItem>
             <MenuItem value="Others">Others</MenuItem>
           </Select>
+          {errors.type && (
+            <Typography variant="caption" color="error">
+              {errors.type}
+            </Typography>
+          )}
         </FormControl>
 
         {/* Show input only if "Others" is selected */}
@@ -392,22 +560,35 @@ const AddClient = () => {
           <TextField
             label="Specify Type"
             value={otherType}
-            onChange={(e) => setOtherType(e.target.value)}
+            onChange={(e) => {
+              setOtherType(e.target.value);
+              setErrors(prev => ({ ...prev, otherType: "" }));
+            }}
             fullWidth
+            error={!!errors.otherType}
+            helperText={errors.otherType}
           />
         )}
 
         {/* Status */}
-        <FormControl fullWidth>
+        <FormControl fullWidth error={!!errors.status}>
           <InputLabel>Status</InputLabel>
           <Select
             value={status}
             label="Status"
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setErrors(prev => ({ ...prev, status: "" }));
+            }}
           >
             <MenuItem value="Existing">Existing</MenuItem>
             <MenuItem value="Potential">Potential</MenuItem>
           </Select>
+          {errors.status && (
+            <Typography variant="caption" color="error">
+              {errors.status}
+            </Typography>
+          )}
         </FormControl>
 
         <Button variant="contained" onClick={handleSubmit} disabled={loading}>

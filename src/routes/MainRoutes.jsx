@@ -59,6 +59,7 @@ const OrganisationList = Loadable(lazy(() => import("../pages/organisation/Organ
 const SuperAdminDashboard = Loadable(lazy(() => import("../pages/superadmin/superadminDashboard")));
 const EditOrganisation = Loadable(lazy(() => import("../pages/organisation/EditOrganisation")));
 const AddOrganisationAdmin = Loadable(lazy(() => import("../pages/organisation/AddOrganisationAdmin")));
+const ExecutiveDashboard = Loadable(lazy(() => import("../pages/executive/executiveDashboard")));
 
 //Users
 const AddUser = Loadable(lazy(() => import("../pages/users/AddUser")));
@@ -66,6 +67,9 @@ const EditUser = Loadable(lazy(() => import("../pages/users/EditUser")));
 const UserList = Loadable(lazy(() => import("../pages/users/UserList")));
 const MasterList = Loadable(lazy(() => import("../pages/master/MasterList")));
 const AddEditMaster = Loadable(lazy(() => import("../pages/master/AddEditMaster")));
+const RateMasterList = Loadable(lazy(() => import("../pages/ratemaster/RateMasterList")));
+const RateAddEditMaster = Loadable(lazy(() => import("../pages/ratemaster/AddEditRateMaster")));
+const CostCalculation = Loadable(lazy(() => import("../pages/costCalculator/costCalculation")));
 
 const MainRoutes = {
   element: MainLayout, // just the component, not <MainLayout />
@@ -88,6 +92,7 @@ const MainRoutes = {
     { path: "/organisations/list", element: <OrganisationList /> },
     { path: "/organisations/edit/:id", element: <EditOrganisation /> },
     { path: "/superadmin/home", element: <SuperAdminDashboard /> },
+    { path: "/executive/home", element: <ExecutiveDashboard /> },
     // AppRoutes / MainRoutes
     { path: "/organisations/:id/add-admin", element: <AddOrganisationAdmin /> },
     { path: "/users/add", element: <AddUser /> },
@@ -96,7 +101,11 @@ const MainRoutes = {
     { path: "/master-data", element: <MasterList /> },
     { path: "/master-data/add", element: <AddEditMaster /> },
     { path: "/master-data/edit/:id", element: <AddEditMaster /> },
-
+    { path: "/ratemaster/list", element: <RateMasterList /> },
+    { path: "/ratemaster/add", element: <RateAddEditMaster /> },
+    { path: "/ratemaster/edit/:id", element: <RateAddEditMaster /> },
+    { path: "/cost-calculation", element: <CostCalculation /> },
+    { path: "/home/cost-calculation", element: <CostCalculation /> },
   ],
 };
 

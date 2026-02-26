@@ -295,10 +295,13 @@ const LoginPage = () => {
         localStorage.setItem("user", JSON.stringify(res.data.data));
 
         const role = res.data.data.role;
+        console.log("roleeee",role)
         if (role === "admin" || role === "viewer" || role === "expenseEditor") {
           navigate("/home");
         } else if (role === "superAdmin") {
           navigate("/superadmin/home");
+        } else if (role === "executive") {
+          navigate("/executive/home");
         }
       } else {
         alert(res.data.message || "Login failed");

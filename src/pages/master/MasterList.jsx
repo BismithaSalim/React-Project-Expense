@@ -138,6 +138,8 @@ import {
   Typography,
   Stack,
   Button,
+  Snackbar,
+  Alert,
   TableFooter,
   TextField,
   TablePagination,
@@ -155,6 +157,9 @@ const MasterDataList = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const navigate = useNavigate();
 
@@ -187,19 +192,42 @@ const MasterDataList = () => {
     }
   };
 
+  // const handleDelete = async (id) => {
+  //   if (!window.confirm("Are you sure you want to delete this item?")) return;
+  //   try {
+  //     const res = await deleteMasterData(id);
+  //     if (res.data.status === 100) {
+  //       alert("Deleted successfully");
+  //       fetchMasterData(page, rowsPerPage, debouncedSearch);
+  //     } else {
+  //       alert(res.data.message || "Delete failed");
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Delete failed");
+  //   }
+  // };
+
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
       const res = await deleteMasterData(id);
       if (res.data.status === 100) {
-        alert("Deleted successfully");
+        setSnackbarMessage("Deleted successfully");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
+
         fetchMasterData(page, rowsPerPage, debouncedSearch);
       } else {
-        alert(res.data.message || "Delete failed");
+        setSnackbarMessage(res.data.message || "Delete failed");
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       }
     } catch (err) {
       console.error(err);
-      alert("Delete failed");
+      setSnackbarMessage("Delete failed");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -279,6 +307,22 @@ const MasterDataList = () => {
           </TableRow>
         </TableFooter>
       </Table>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+      
     </TableContainer>
   );
 };

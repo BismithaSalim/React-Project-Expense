@@ -126,6 +126,8 @@ export const deleteExpense = async (expenseId) => {
 export const loginUser = (data) => api.post("/user/login", data);
 export const logoutUser = (token) =>
   api.post("/user/logout", {}, { headers: { Authorization: `Bearer ${token}` } });
+  // api.post("/user/logout", {}, { headers: { Authorization: `Bearer ${token}` } });
+
 
 
 // P&L Summary
@@ -215,4 +217,50 @@ export const deleteMasterData = async (id) => {
   return await api.patch(`/master/deleteMaster/${id}`);
 };
 
+
+export const createRateMaster = async (data) => {
+  return await api.post("/master/addRateMaster", data);
+};
+
+export const updateRateMaster= async (id, data) => {
+  return await api.put(`/master/updateRateMaster/${id}`, data);
+};
+
+export const getRateMasters = async (page = 1, limit = 10,showDeleted = false,search) => {
+  return await api.get("/master/getRateMasters", {
+    params: { page, limit,showDeleted, search }
+  });
+};
+
+export const getRateMasterById = async (id) => {
+  return await api.get(`/master/getRateMasterById/${id}`);
+};
+
+export const deleteRateMaster = async (id) => {
+  return await api.patch(`/master/deleteRateMaster/${id}`);
+};
+
+export const getServices = async (showDeleted = false) => {
+  return await api.get("/master/getRateMasters", {
+    params: { showDeleted }
+  });
+};
+
+export const getProject = async (page = 1, limit = 5, showDeleted = false, search) => {
+  return await api.get("/project/getProjects", {
+    params: { page, limit, showDeleted,search }
+  });
+};
+
+export const createCostCalculation = async (data) => {
+  return await api.post(`/master/createCostCalculation`,data);
+};
+
+export const updateCostCalculation = async (data) => {
+  return await api.put(`/master/updateCostCalculation`,data);
+};
+
+export const getCostCalculation = async (projectId,serviceTitle,locationType) => {
+  return await api.post(`/master/getCostCalculation`,{projectId,serviceTitle,locationType});
+};
 export default api;

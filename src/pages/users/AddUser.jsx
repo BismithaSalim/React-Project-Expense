@@ -6,7 +6,9 @@ import {
   Stack,
   Typography,
   CircularProgress,
-  MenuItem
+  MenuItem,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { addUser } from "../../services/api";
@@ -24,8 +26,12 @@ const AddUser = () => {
     email: "",
     mobileNo: "",
     password: "",
-    role: "expenseEditor" // default role
+    role: "expenseEditor"
   });
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -59,15 +65,32 @@ const AddUser = () => {
         alert("User added successfully");
         navigate(-1); // go back
       } else {
-        alert(res.data.message || "Failed to add user");
+        alert(res.data.errorDetails || "Failed to add user");
       }
 
-    } catch (err) {
-      console.error(err);
-      alert("Error saving user");
+    }catch (err) {
+      console.error("errrrr", err.response?.data?.errorDetails);
+
+      setSnackbarMessage(
+        err.response?.data?.errorDetails || "Error saving user"
+      );
+
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setLoading(false);
     }
+
+    // catch (err) {
+    //   console.error("errrrr",err.response.data.errorDetails);
+    //   if(err.response?.data?.errorDetails === "Username must be unique"){
+    //     alert("Username must be unique");
+    //   }else{
+    //     alert("Error saving user");
+    //   }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (
@@ -140,6 +163,7 @@ const AddUser = () => {
           >
             <MenuItem value="expenseEditor">Expense Editor</MenuItem>
             <MenuItem value="viewer">Viewer</MenuItem>
+            <MenuItem value="executive">Executive</MenuItem>
           </TextField>
 
           <Stack direction="row" spacing={2} justifyContent="flex-end">
@@ -154,6 +178,22 @@ const AddUser = () => {
 
         </Stack>
       </form>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={snackbarSeverity}
+          sx={{ width: "100%" }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
     </Paper>
   );
 };

@@ -178,6 +178,7 @@ const queryParams = new URLSearchParams(location.search);
           >
             <MenuItem value="expenseEditor">Expense Editor</MenuItem>
             <MenuItem value="viewer">Viewer</MenuItem>
+            <MenuItem value="executive">Executive</MenuItem>
           </TextField>
 
           <Stack direction="row" spacing={2} justifyContent="flex-end">
