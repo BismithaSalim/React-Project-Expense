@@ -702,6 +702,7 @@ import { getRole, getUser } from "../../utils/auth";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
+
 // Import your API functions
 import {
   getProject,
@@ -729,6 +730,7 @@ const CostCalculation = () => {
   const role = getRole();
   const user = getUser()
   const organisation = user?.organisationRefId?.organisationName || "";
+  const [serviceErrors, setServiceErrors] = useState({});
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -916,22 +918,44 @@ const CostCalculation = () => {
 //     setFormData({ ...formData, services: updated });
 //   };
 
+// const handleServiceChange = (index, field, value) => {
+//   const updated = [...formData.services];
+
+//   // just update the value, no forced 30 here
+//   updated[index][field] = value;
+
+//   const qty = updated[index].quantity === "" ? 0 : Number(updated[index].quantity);
+//   const mgn = updated[index].margin === "" ? 30 : Number(updated[index].margin);
+//   const rate = updated[index].rate || 0;
+
+//   updated[index].amount = calculateAmount(rate, qty, mgn);
+
+//   setFormData({ ...formData, services: updated });
+// };
+
 const handleServiceChange = (index, field, value) => {
   const updated = [...formData.services];
-
-  // just update the value, no forced 30 here
   updated[index][field] = value;
 
   const qty = updated[index].quantity === "" ? 0 : Number(updated[index].quantity);
-  const mgn = updated[index].margin === "" ? 30 : Number(updated[index].margin);
+  const mgn = updated[index].margin === "" ? 0 : Number(updated[index].margin);
   const rate = updated[index].rate || 0;
 
   updated[index].amount = calculateAmount(rate, qty, mgn);
 
   setFormData({ ...formData, services: updated });
+
+  // Validate margin
+  if (field === "margin") {
+    setServiceErrors((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        margin: mgn < 30 ? "Margin must be at least 30" : "",
+      },
+    }));
+  }
 };
-
-
 
   // ==============================
   // DELETE SERVICE
@@ -1142,7 +1166,7 @@ const handleServiceChange = (index, field, value) => {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <TextField
+            {/* <TextField
               select
               fullWidth
               label="Project"
@@ -1156,6 +1180,35 @@ const handleServiceChange = (index, field, value) => {
                   {p.projectName}
                 </MenuItem>
               ))}
+            </TextField> */}
+
+            <TextField
+                select
+                fullWidth
+                label="Project"
+                value={formData.project}
+                onChange={(e) =>
+                    setFormData({ ...formData, project: e.target.value })
+                }
+                InputLabelProps={{ shrink: true }}
+                SelectProps={{
+                    displayEmpty: true,
+                }}
+                sx={{
+                    "& .MuiSelect-select": {
+                    padding: "16.5px 14px", // makes it look like normal textfield
+                    },
+                }}
+            >
+                <MenuItem value="">
+                    <em>Select Project</em>
+                </MenuItem>
+
+                {projects.map((p) => (
+                    <MenuItem key={p._id} value={p._id}>
+                    {p.projectName}
+                    </MenuItem>
+                ))}
             </TextField>
           </Grid>
             
@@ -1171,7 +1224,7 @@ const handleServiceChange = (index, field, value) => {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <TextField
+            {/* <TextField
               select
               fullWidth
               label="Location Type"
@@ -1182,7 +1235,34 @@ const handleServiceChange = (index, field, value) => {
             >
               <MenuItem value="Muscat">Muscat</MenuItem>
               <MenuItem value="Outside Muscat">Outside Muscat</MenuItem>
+            </TextField> */}
+
+            <TextField
+                select
+                fullWidth
+                label="Location Type"
+                value={formData.locationType}
+                onChange={(e) =>
+                    setFormData({ ...formData, locationType: e.target.value })
+                }
+                InputLabelProps={{ shrink: true }}   // 👈 add it here
+                SelectProps={{
+                    displayEmpty: true,
+                }}
+                sx={{
+                    "& .MuiSelect-select": {
+                    padding: "16.5px 14px",
+                    },
+                }}
+            >
+            <MenuItem value="">
+                <em>Select Location Type</em>
+            </MenuItem>
+
+            <MenuItem value="Muscat">Muscat</MenuItem>
+            <MenuItem value="Outside Muscat">Outside Muscat</MenuItem>
             </TextField>
+
           </Grid>
 
           <Grid item xs={12} md={4}>
@@ -1238,8 +1318,21 @@ const handleServiceChange = (index, field, value) => {
                       onChange={(e) =>
                         handleTypeChange(index, e.target.value)
                       }
-                      InputProps={role === "admin" ? { readOnly: true } : {}}
+                       InputProps={role === "admin" ? { readOnly: true } : {}}
+                       InputLabelProps={{ shrink: true }}   // 👈 add it here
+                       SelectProps={{
+                            displayEmpty: true,
+                        }}
+                        sx={{
+                            "& .MuiSelect-select": {
+                            padding: "16.5px 14px",
+                            },
+                        }}
                     >
+                    <MenuItem value="">
+                        <em>Select Service Type</em>
+                    </MenuItem>
+                    
                       {servicesMaster.map((s) => (
                         <MenuItem key={s.serviceName} value={s.serviceName}>
                           {s.serviceName}
@@ -1265,78 +1358,82 @@ const handleServiceChange = (index, field, value) => {
                     /> */}
 
                     <TextField
-  type="number"
-  size="small"
-  value={item.quantity}
-  InputProps={role === "admin" ? { readOnly: true } : {}}
-  inputProps={{
-    inputMode: "numeric",
-    pattern: "[0-9]*",
-  }}
-  sx={{
-    "& input[type=number]::-webkit-outer-spin-button": {
-      WebkitAppearance: "none",
-      margin: 0,
-    },
-    "& input[type=number]::-webkit-inner-spin-button": {
-      WebkitAppearance: "none",
-      margin: 0,
-    },
-    "& input[type=number]": {
-      MozAppearance: "textfield",
-    },
-  }}
-  onChange={(e) =>
-    handleServiceChange(
-      index,
-      "quantity",
-      e.target.value // <-- pass value as string, not Number()
-    )
-  }
-/>
+                        type="number"
+                        size="small"
+                        value={item.quantity}
+                        InputProps={role === "admin" ? { readOnly: true } : {}}
+                        inputProps={{
+                            inputMode: "numeric",
+                            pattern: "[0-9]*",
+                        }}
+                        sx={{
+                            "& input[type=number]::-webkit-outer-spin-button": {
+                            WebkitAppearance: "none",
+                            margin: 0,
+                            },
+                            "& input[type=number]::-webkit-inner-spin-button": {
+                            WebkitAppearance: "none",
+                            margin: 0,
+                            },
+                            "& input[type=number]": {
+                            MozAppearance: "textfield",
+                            },
+                        }}
+                        onChange={(e) =>
+                            handleServiceChange(
+                            index,
+                            "quantity",
+                            e.target.value // <-- pass value as string, not Number()
+                            )
+                        }
+                        />
 
 
                   </TableCell>
                   <TableCell>
-                    {/* <TextField
-                      type="number"
-                      size="small"
-                      inputProps={{ min: 30 }}
-                      value={item.margin}
-                      InputProps={role === "admin" ? { readOnly: true } : {}}
-                      onChange={(e) =>
-                        handleServiceChange(
-                          index,
-                          "margin",
-                          Number(e.target.value)
-                        )
-                      }
-                    /> */}
-
                     <TextField
-                    type="number"
-                    size="small"
-                    value={item.margin}
-                    inputProps={{
-                        inputMode: "numeric",
-                        pattern: "[0-9]*",
-                        min: 0, // temporarily allow typing below 30
-                    }}
-                    InputProps={role === "admin" ? { readOnly: true } : {}}
-                    sx={{
-                        "& input[type=number]::-webkit-outer-spin-button": { WebkitAppearance: "none", margin: 0 },
-                        "& input[type=number]::-webkit-inner-spin-button": { WebkitAppearance: "none", margin: 0 },
-                        "& input[type=number]": { MozAppearance: "textfield" },
-                    }}
-                    onChange={(e) =>
-                        handleServiceChange(index, "margin", e.target.value)
-                    }
-                    onBlur={(e) => {
-                        // enforce minimum 30 when user leaves the field
-                        if (!e.target.value || Number(e.target.value) < 30) {
-                        handleServiceChange(index, "margin", 30);
+                    // type="number"
+                    // size="small"
+                    // value={item.margin}
+                    // inputProps={{
+                    //     inputMode: "numeric",
+                    //     pattern: "[0-9]*",
+                    //     min: 0, // temporarily allow typing below 30
+                    // }}
+                    // InputProps={role === "admin" ? { readOnly: true } : {}}
+                    // sx={{
+                    //     "& input[type=number]::-webkit-outer-spin-button": { WebkitAppearance: "none", margin: 0 },
+                    //     "& input[type=number]::-webkit-inner-spin-button": { WebkitAppearance: "none", margin: 0 },
+                    //     "& input[type=number]": { MozAppearance: "textfield" },
+                    // }}
+                    // onChange={(e) =>
+                    //     handleServiceChange(index, "margin", e.target.value)
+                    // }
+                    // onBlur={(e) => {
+                    //     // enforce minimum 30 when user leaves the field
+                    //     if (!e.target.value || Number(e.target.value) < 30) {
+                    //     handleServiceChange(index, "margin", 30);
+                    //     }
+                    // }}
+                        type="number"
+                        size="small"
+                        value={item.margin}
+                        inputProps={{
+                            inputMode: "numeric",
+                            pattern: "[0-9]*",
+                            min: 0,
+                        }}
+                        InputProps={role === "admin" ? { readOnly: true } : {}}
+                        error={!!serviceErrors[index]?.margin}   // show red outline
+                        helperText={serviceErrors[index]?.margin || ""}
+                        sx={{
+                            "& input[type=number]::-webkit-outer-spin-button": { WebkitAppearance: "none", margin: 0 },
+                            "& input[type=number]::-webkit-inner-spin-button": { WebkitAppearance: "none", margin: 0 },
+                            "& input[type=number]": { MozAppearance: "textfield" },
+                        }}
+                        onChange={(e) =>
+                            handleServiceChange(index, "margin", e.target.value)
                         }
-                    }}
                     />
 
 
