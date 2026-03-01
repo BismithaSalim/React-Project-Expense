@@ -6,7 +6,9 @@ import {
   Stack,
   Typography,
   CircularProgress,
-  MenuItem
+  MenuItem,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getUserById, updateUser } from "../../services/api";
@@ -21,6 +23,11 @@ const queryParams = new URLSearchParams(location.search);
 
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  
 
   const [form, setForm] = useState({
     firstName: "",
@@ -90,15 +97,21 @@ const queryParams = new URLSearchParams(location.search);
       const res = await updateUser(id, payload);
 
       if (res.data.status === 100) {
-        alert("User updated successfully");
+        setSnackbarMessage("Updated successfully");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
         navigate(-1);
       } else {
         alert(res.data.message || "Update failed");
       }
 
     } catch (err) {
-      console.error(err);
-      alert("Error updating user");
+      setSnackbarMessage(
+        err.response?.data?.errorDetails || "Error updating user"
+      );
+
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     } finally {
       setLoading(false);
     }
@@ -193,6 +206,21 @@ const queryParams = new URLSearchParams(location.search);
 
         </Stack>
       </form>
+
+       <Snackbar
+              open={snackbarOpen}
+              autoHideDuration={3000}
+              onClose={() => setSnackbarOpen(false)}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert
+                onClose={() => setSnackbarOpen(false)}
+                severity={snackbarSeverity}
+                sx={{ width: "100%" }}
+              >
+                {snackbarMessage}
+              </Alert>
+      </Snackbar>
     </Paper>
   );
 };

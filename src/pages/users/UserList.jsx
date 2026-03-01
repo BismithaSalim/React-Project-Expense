@@ -16,6 +16,8 @@ import {
   IconButton,
   FormControlLabel,
   Switch,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
@@ -29,9 +31,13 @@ const UserList = () => {
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(0); // 0-based
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
   const [showDeleted, setShowDeleted] = useState(false); // new
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const role = getRole();
 
@@ -40,7 +46,7 @@ const UserList = () => {
       setLoading(true);
       const response = await getUsers(page + 1, rowsPerPage, showDeleted);
       setUsers(response.data.data || []);
-      setTotalCount(response.data.pagination?.totalRecords || 0);
+      setTotalCount(response.data.totalCount || 0);
     } catch (err) {
       console.error(err);
       alert("Failed to fetch users");
@@ -59,21 +65,52 @@ const UserList = () => {
     setPage(0);
   };
 
-  const handleDeleteRestore = async (userId) => {
-    if (!window.confirm("Are you sure you want to delete/restore this user?")) return;
-    try {
-      const res = await deleteUser(userId);
-      if (res.data.status === 100) {
-        alert("User updated successfully");
-        fetchUsers(); // refresh list
-      } else {
-        alert(res.data.message || "Delete/Restore failed");
+  const handleDeleteRestore = async (userId, isActive) => {
+      const action = isActive ? "delete" : "restore";
+        console.log("isActive:", isActive, "action:", action);
+      if (!window.confirm(`Are you sure you want to ${action} this user?`)) return;
+
+      try {
+        const res = await deleteUser(userId); // or restoreUser if needed
+        const message =
+          res.data.status === 100
+            ? `User ${action}d successfully`
+            : res.data.message || `${action} failed`;
+
+        setSnackbarMessage(message);
+        setSnackbarSeverity(res.data.status === 100 ? "success" : "error");
+        setSnackbarOpen(true);
+
+        if (res.data.status === 100) fetchUsers();
+      } catch (err) {
+        console.error(err);
+        setSnackbarMessage(`${action} failed`);
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
       }
-    } catch (err) {
-      console.error(err);
-      alert("Delete/Restore failed");
-    }
   };
+  // const handleDeleteRestore = async (userId,isActive) => {
+  //   const action = isActive ? "delete" : "restore";
+  //   if (!window.confirm(`Are you sure you want to ${action} this user?`)) return;
+  //   try {
+  //     const res = await deleteUser(userId);
+  //     if (res.data.status === 100) {
+  //       setSnackbarMessage(`User ${action}d successfully`);
+  //       setSnackbarSeverity("success");
+  //       setSnackbarOpen(true);
+  //       fetchUsers(); // refresh list
+  //     } else {
+  //        setSnackbarMessage(res.data.message || `${action} failed`);
+  //        setSnackbarSeverity("error");
+  //        setSnackbarOpen(true);
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //     setSnackbarMessage(`${action} failed`);
+  //     setSnackbarSeverity("error");
+  //     setSnackbarOpen(true);
+  //   }
+  // };
 
   return (
     <Box sx={{ p: 5 }}>
@@ -147,7 +184,7 @@ const UserList = () => {
                         {/* Delete/Restore icon */}
                         <IconButton
                           color={user.isActive ? "error" : "success"}
-                          onClick={() => handleDeleteRestore(user._id)}
+                          onClick={() => handleDeleteRestore(user._id,user.isActive)}
                           title={user.isActive ? "Delete User" : "Restore User"}
                           disabled={role === "viewer" || role === "expenseEditor"}
                         >
@@ -172,6 +209,21 @@ const UserList = () => {
           />
         </Paper>
       )}
+
+      <Snackbar
+              open={snackbarOpen}
+              autoHideDuration={3000}
+              onClose={() => setSnackbarOpen(false)}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert
+                onClose={() => setSnackbarOpen(false)}
+                severity={snackbarSeverity}
+                sx={{ width: "100%" }}
+              >
+                {snackbarMessage}
+              </Alert>
+            </Snackbar>
     </Box>
   );
 };

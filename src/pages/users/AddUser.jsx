@@ -62,8 +62,11 @@ const AddUser = () => {
       const res = await addUser(payload);
 
       if (res.data.status === 100) {
-        alert("User added successfully");
-        navigate(-1); // go back
+        setSnackbarMessage("User added successfully");
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
+        setTimeout(() => navigate(-1), 1000);
+        // navigate(-1); // go back
       } else {
         alert(res.data.errorDetails || "Failed to add user");
       }

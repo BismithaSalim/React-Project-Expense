@@ -84,29 +84,29 @@ const RateMasterList = () => {
 //     }
 //   };
 
-const handleDeleteRestore = async (id, isActive) => {
-  const action = isActive ? "delete" : "restore";
-//   if (!window.confirm(`Are you sure you want to ${action} this rate?`)) return;
+    const handleDeleteRestore = async (id, isActive) => {
+    const action = isActive ? "delete" : "restore";
+    //   if (!window.confirm(`Are you sure you want to ${action} this rate?`)) return;
 
-  try {
-    const res = await deleteRateMaster(id);
-    if (res.data.status === 100) {
-      setSnackbarMessage(`Rate ${action}d successfully`);
-      setSnackbarSeverity("success");
-      setSnackbarOpen(true);
-      fetchRateMasters();
-    } else {
-      setSnackbarMessage(res.data.message || `${action} failed`);
-      setSnackbarSeverity("error");
-      setSnackbarOpen(true);
+    try {
+        const res = await deleteRateMaster(id);
+        if (res.data.status === 100) {
+        setSnackbarMessage(`Rate ${action}d successfully`);
+        setSnackbarSeverity("success");
+        setSnackbarOpen(true);
+        fetchRateMasters();
+        } else {
+        setSnackbarMessage(res.data.message || `${action} failed`);
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
+        }
+    } catch (err) {
+        console.error(err);
+        setSnackbarMessage(`${action} failed`);
+        setSnackbarSeverity("error");
+        setSnackbarOpen(true);
     }
-  } catch (err) {
-    console.error(err);
-    setSnackbarMessage(`${action} failed`);
-    setSnackbarSeverity("error");
-    setSnackbarOpen(true);
-  }
-};
+    };
 
   return (
     <Box sx={{ p: 5 }}>
