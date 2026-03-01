@@ -1318,7 +1318,7 @@ const handleServiceChange = (index, field, value) => {
                       onChange={(e) =>
                         handleTypeChange(index, e.target.value)
                       }
-                       InputProps={role === "admin" ? { readOnly: true } : {}}
+                    //    InputProps={role === "admin" ? { readOnly: true } : {}}
                        InputLabelProps={{ shrink: true }}   // 👈 add it here
                        SelectProps={{
                             displayEmpty: true,
@@ -1361,7 +1361,7 @@ const handleServiceChange = (index, field, value) => {
                         type="number"
                         size="small"
                         value={item.quantity}
-                        InputProps={role === "admin" ? { readOnly: true } : {}}
+                        // InputProps={role === "admin" ? { readOnly: true } : {}}
                         inputProps={{
                             inputMode: "numeric",
                             pattern: "[0-9]*",
@@ -1423,7 +1423,7 @@ const handleServiceChange = (index, field, value) => {
                             pattern: "[0-9]*",
                             min: 0,
                         }}
-                        InputProps={role === "admin" ? { readOnly: true } : {}}
+                        // InputProps={role === "admin" ? { readOnly: true } : {}}
                         error={!!serviceErrors[index]?.margin}   // show red outline
                         helperText={serviceErrors[index]?.margin || ""}
                         sx={{
@@ -1462,7 +1462,7 @@ const handleServiceChange = (index, field, value) => {
           </Typography>
           <Grid container spacing={2}>
             <Grid item>
-              <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSave} disabled={role === "admin"} >
+              <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSave} >
                 Save
               </Button>
             </Grid>
