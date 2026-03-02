@@ -2246,7 +2246,29 @@ const CostCalculation = () => {
         </Paper>
       )}
 
-      <Snackbar
+        <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2500}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+        <Alert
+            severity={snackbarSeverity}
+            onClose={() => setSnackbarOpen(false)}
+            sx={{
+            fontSize: "16px",
+            fontWeight: 600,
+            px: 4,
+            py: 1.5,
+            boxShadow: 6,
+            minWidth: "300px",
+            justifyContent: "center",
+            }}
+        >
+            {snackbarMessage}
+        </Alert>
+        </Snackbar>
+      {/* <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}
         onClose={() => setSnackbarOpen(false)}
@@ -2255,7 +2277,7 @@ const CostCalculation = () => {
         <Alert severity={snackbarSeverity} onClose={() => setSnackbarOpen(false)}>
           {snackbarMessage}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </Box>
   );
 };
