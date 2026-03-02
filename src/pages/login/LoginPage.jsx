@@ -350,67 +350,114 @@ const LoginPage = () => {
           Login
         </Typography>
 
-        <Stack spacing={2}>
-          <TextField
-            label="userName"
-            name="userName"
-            value={formData.userName}
-            onChange={handleChange}
-            fullWidth
-            autoFocus
-          />
+        {/* <Box mt={2}>
+  <Button
+    variant="outlined"
+    fullWidth
+    size="medium"
+    sx={{
+      borderColor: "#0D47A1",
+      color: "#0D47A1",
+      borderRadius: 2,
+      fontWeight: 600,
+      textTransform: "none",
+      transition: "all 0.3s ease",
+      "&:hover": {
+        backgroundColor: "#E3F2FD",
+        borderColor: "#0B3C91",
+      },
+    }}
+    onClick={() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("userName");
+      setFormData({ userName: "", password: "" });
+      navigate("/cost-calculation");
+    }}
+  >
+    Try Service Cost Calculator (No Login Required)
+  </Button>
+</Box> */}
 
-          {/* <TextField
-            label="Password"
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            fullWidth
-          /> */}
 
-          <TextField
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            fullWidth
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => setShowPassword((prev) => !prev)}
-                    onMouseDown={(e) => e.preventDefault()} // 🔥 Fix for Safari / Apple
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
 
-          {/* CAPTCHA */}
-          <ReCAPTCHA
-            sitekey={SITE_KEY}
-            onChange={handleCaptchaChange}
-            style={{ alignSelf: "center" }}
-          />
+<Stack spacing={2}>
+  <TextField
+    label="userName"
+    name="userName"
+    value={formData.userName}
+    onChange={handleChange}
+    fullWidth
+    autoFocus
+  />
 
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              backgroundColor: "#0D47A1",
-              "&:hover": { backgroundColor: "#0B3C91" },
-            }}
-            onClick={handleLogin}
-            disabled={loading}
+  <TextField
+    label="Password"
+    type={showPassword ? "text" : "password"}
+    name="password"
+    value={formData.password}
+    onChange={handleChange}
+    fullWidth
+    InputProps={{
+      endAdornment: (
+        <InputAdornment position="end">
+          <IconButton
+            onClick={() => setShowPassword((prev) => !prev)}
+            onMouseDown={(e) => e.preventDefault()}
+            edge="end"
           >
-            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
-          </Button>
-        </Stack>
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+          </IconButton>
+        </InputAdornment>
+      ),
+    }}
+  />
+
+  <ReCAPTCHA
+    sitekey={SITE_KEY}
+    onChange={handleCaptchaChange}
+    style={{ alignSelf: "center" }}
+  />
+
+  <Button
+    variant="contained"
+    size="large"
+    sx={{
+      backgroundColor: "#0D47A1",
+      "&:hover": { backgroundColor: "#0B3C91" },
+    }}
+    onClick={handleLogin}
+    disabled={loading}
+  >
+    {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+  </Button>
+
+  {/* 👇 Properly spaced secondary action */}
+  <Button
+    variant="outlined"
+    fullWidth
+    sx={{
+      mt: 1,
+      borderColor: "#0D47A1",
+      color: "#0D47A1",
+      borderRadius: 2,
+      fontWeight: 600,
+      textTransform: "none",
+      "&:hover": {
+        backgroundColor: "#E3F2FD",
+      },
+    }}
+    onClick={() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("userName");
+      setFormData({ userName: "", password: "" });
+      navigate("/cost-calculation");
+    }}
+  >
+    Try Service Cost Calculator
+  </Button>
+</Stack>
 
         <Typography variant="body2" mt={2} color="textSecondary">
           Forgot your password? Contact admin.

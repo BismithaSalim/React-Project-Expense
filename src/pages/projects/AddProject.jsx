@@ -194,6 +194,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getClients, addProject } from "../../services/api";
+import { Autocomplete } from "@mui/material";
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -316,7 +317,7 @@ const AddProject = () => {
             fullWidth
           />
 
-          <TextField
+          {/* <TextField
             select
             label="Client Name"
             name="clientRefId"
@@ -328,7 +329,28 @@ const AddProject = () => {
                 {c.clientName}
               </MenuItem>
             ))}
-          </TextField>
+          </TextField> */}
+
+          <Autocomplete
+            options={clients}
+            getOptionLabel={(option) => option.clientName || ""}
+            value={
+              clients.find((c) => c._id === formData.clientRefId) || null
+            }
+            onChange={(event, newValue) => {
+              setFormData({
+                ...formData,
+                clientRefId: newValue ? newValue._id : "",
+              });
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Client Name"
+                fullWidth
+              />
+            )}
+          />
 
           <TextField label="Location" name="location" onChange={handleChange} />
           <TextField

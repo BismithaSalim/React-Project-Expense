@@ -9,6 +9,7 @@ import {
   Typography
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Autocomplete } from "@mui/material";
 import { getClients, getProjectsByClient, addExpense, getMasterDataByCategory } from "../../services/api";
 
 const AddExpense = () => {
@@ -138,7 +139,7 @@ const [categories, setCategories] = useState([]);
             InputLabelProps={{ shrink: true }}
           />
 
-          <TextField
+          {/* <TextField
             select
             label="Client Name"
             name="clientRefId"
@@ -150,9 +151,41 @@ const [categories, setCategories] = useState([]);
                 {c.clientName}
               </MenuItem>
             ))}
-          </TextField>
+          </TextField> */}
 
-          <TextField
+          <Autocomplete
+            options={clients}
+            getOptionLabel={(option) => option.clientName || ""}
+            value={clients.find(c => c._id === formData.clientRefId) || null}
+            onChange={(event, newValue) => {
+              setFormData(prev => ({
+                ...prev,
+                clientRefId: newValue ? newValue._id : "",
+                projectRefId: ""   // reset project when client changes
+              }));
+              setProjects([]); // clear projects until new fetch
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Client Name" fullWidth />
+            )}
+          />
+
+          <Autocomplete
+            options={projects}
+            getOptionLabel={(option) => option.projectName || ""}
+            value={projects.find(p => p._id === formData.projectRefId) || null}
+            onChange={(event, newValue) => {
+              setFormData(prev => ({
+                ...prev,
+                projectRefId: newValue ? newValue._id : "",
+              }));
+            }}
+            renderInput={(params) => (
+              <TextField {...params} label="Project Name" fullWidth />
+            )}
+            disabled={!formData.clientRefId}
+          />
+          {/* <TextField
             select
             label="Project Name"
             name="projectRefId"
@@ -164,7 +197,7 @@ const [categories, setCategories] = useState([]);
                 {p.projectName}
               </MenuItem>
             ))}
-          </TextField>
+          </TextField> */}
 
           {/* <TextField
             select

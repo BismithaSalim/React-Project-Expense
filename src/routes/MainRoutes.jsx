@@ -105,6 +105,7 @@ const MainRoutes = {
     { path: "/ratemaster/add", element: <RateAddEditMaster /> },
     { path: "/ratemaster/edit/:id", element: <RateAddEditMaster /> },
     { path: "/cost-calculation", element: <CostCalculation /> },
+    { path: "/executive/cost-calculation", element: <CostCalculation /> },
     { path: "/home/cost-calculation", element: <CostCalculation /> },
   ],
 };

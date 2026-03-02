@@ -20,7 +20,7 @@ const ExecutiveDashboard = () => {
       title: "Service cost calculator",
       description: "Manage service cost calculation",
       icon: <CalculateIcon fontSize="large" />,
-      route: "/cost-calculation"
+      route: "/executive/cost-calculation"
     }
   ];
 

@@ -273,59 +273,17 @@ function AppContent() {
   }, []);
 
   return (
-    // <Routes>
-
-    //   {/* Login */}
-    //   <Route path="/" element={<LoginPage />} />
-
-    //   {/* ADMIN / VIEWER / EXPENSE EDITOR */}
-    //   <Route
-    //     element={
-    //       <ProtectedRoute roles={["admin", "viewer", "expenseEditor"]}>
-    //         <MainLayout />
-    //       </ProtectedRoute>
-    //     }
-    //   >
-    //     <Route path="/home" element={<FrontPage />} />
-    //   </Route>
-
-    //   {/* EXECUTIVE */}
-    //   <Route
-    //     // path="/executive"
-    //     element={
-    //       <ProtectedRoute roles={["executive"]}>
-    //         <MainLayout />
-    //       </ProtectedRoute>
-    //     }
-    //   >
-    //     <Route path="/executive/home" element={<ExecutiveDashboard />} />
-    //     <Route path="/cost-calculation" element={<CostCalculation />} />
-    //   </Route>
-
-    //   {/* SUPER ADMIN */}
-    //   <Route
-    //     // path="/superadmin"
-    //     element={
-    //       <ProtectedRoute roles={["superAdmin"]}>
-    //         <MainLayout />
-    //       </ProtectedRoute>
-    //     }
-    //   >
-    //     <Route path="/superadmin/home" element={<SuperAdminDashboard />} />
-    //   </Route>
-
-    // </Routes>
-
-    <Routes>
+<Routes>
   {/* Login */}
   <Route path="/" element={<LoginPage />} />
+  <Route path="/cost-calculation" element={<CostCalculation />} />
 
   {/* EXECUTIVE */}
   <Route element={<ProtectedRoute roles={["executive"]} />}>
     <Route element={<MainLayout />}>
       <Route path="/executive" element={<Navigate to="home" replace />} />
       <Route path="/executive/home" element={<ExecutiveDashboard />} />
-      <Route path="/cost-calculation" element={<CostCalculation />} />
+      <Route path="executive/cost-calculation" element={<CostCalculation />} />
     </Route>
   </Route>
 
