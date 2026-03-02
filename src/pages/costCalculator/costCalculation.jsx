@@ -1777,8 +1777,9 @@ const CostCalculation = () => {
   // ==============================
   const calculateCost = (rate, quantity) => rate * quantity;
   const calculateAmount = (cost, margin) => cost * (1 + margin / 100);
-  const calculateTotal = () =>
-    formData.services.reduce((sum, item) => sum + (item.amount || 0), 0);
+  const calculateTotal = () =>formData.services.reduce((sum, item) => sum + (item.amount || 0), 0);
+  const calculateTotalCost = () =>formData.services.reduce((sum, item) => sum + (item.cost || 0), 0);
+  const calculateTotalMargin = () => calculateTotal() - calculateTotalCost();
 
   // ==============================
   // ADD SERVICE
@@ -1884,6 +1885,8 @@ const CostCalculation = () => {
         city: formData.city,
         services: formData.services,
         totalAmount: calculateTotal(),
+        totalCost:calculateTotalCost(),
+        totalMargin:calculateTotalMargin()
       };
 
       const res = existingRecordId
@@ -1920,7 +1923,10 @@ const CostCalculation = () => {
       csv += `${item.type},${item.unit},${item.rate},${item.quantity},${item.margin},${(item.amount || 0).toFixed(3)}\n`;
     });
 
-    csv += `,,,,Total,${calculateTotal().toFixed(3)}\n`;
+    // csv += `,,,,Total,${calculateTotal().toFixed(3)}\n`;
+    csv += `,,,,Total Cost,${calculateTotalCost().toFixed(3)}\n`;
+    csv += `,,,,Total Margin,${calculateTotalMargin().toFixed(3)}\n`;
+    csv += `,,,,Total Amount,${calculateTotal().toFixed(3)}\n`;
 
     const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
@@ -1971,7 +1977,12 @@ const CostCalculation = () => {
       item.type, item.unit, item.rate, item.quantity, item.margin, (item.amount || 0).toFixed(3)
     ]);
 
-    tableRows.push(["", "", "", "", "Total", calculateTotal().toFixed(3)]);
+    // tableRows.push(["", "", "", "", "Total", calculateTotal().toFixed(3)]);
+    tableRows.push(
+        ["", "", "", "", "Total Cost", calculateTotalCost().toFixed(3)],
+        ["", "", "", "", "Total Margin", calculateTotalMargin().toFixed(3)],
+        ["", "", "", "", "Total Amount", calculateTotal().toFixed(3)]
+    );
 
     autoTable(doc, {
       startY: doc.lastAutoTable.finalY + 10,
@@ -2175,9 +2186,38 @@ const CostCalculation = () => {
           </Table>
 
           <Divider sx={{ my: 2 }} />
-          <Typography variant="subtitle1" sx={{ textAlign: "right", mr: 2 }}>
+          {/* <Typography variant="subtitle1" sx={{ textAlign: "right", mr: 2 }}>
             Total: {calculateTotal().toFixed(3)}
-          </Typography>
+          </Typography> */}
+          <Box
+            sx={{
+                mt: 2,
+                display: "flex",
+                justifyContent: "flex-end",
+            }}
+            >
+            <Typography
+                variant="subtitle1"
+                sx={{
+                fontWeight: 600,
+                display: "flex",
+                gap: 4,
+                flexWrap: "wrap",
+                }}
+            >
+                <span>
+                Total Cost: {calculateTotalCost().toFixed(3)}
+                </span>
+
+                <span>
+                Total Margin: {calculateTotalMargin().toFixed(3)}
+                </span>
+
+                <span>
+                Total Amount: {calculateTotal().toFixed(3)}
+                </span>
+            </Typography>
+         </Box>
 
           <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
             <Button
