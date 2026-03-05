@@ -1629,7 +1629,7 @@ import {
   TableCell,
   TableBody,
   IconButton,
-  Divider,
+//   Divider,
   Snackbar,
   Alert
 } from "@mui/material";
@@ -2005,24 +2005,311 @@ const CostCalculation = () => {
   // ==============================
   // RENDER
   // ==============================
+//   return (
+//     <Box sx={{ p: 4 }}>
+//       {isDemo && (
+//         <Button variant="contained" sx={{ mb: 3,backgroundColor: "#1976D2", "&:hover": { backgroundColor: "#115293" }}} onClick={() => window.history.back()}>
+//           Back
+//         </Button>
+//       )}
+
+//       <Typography variant="h4" mb={4}>
+//         Cost Calculation
+//       </Typography>
+
+//       {/* Project Details */}
+//       <Paper sx={{ p: 3, mb: 4 }}>
+//         <Typography variant="h6" mb={2}>
+//           Project Details
+//         </Typography>
+//         <Grid container spacing={3}>
+//           <Grid item xs={12} md={4}>
+//             {isDemo ? (
+//               <TextField
+//                 fullWidth
+//                 label="Project"
+//                 value={formData.project}
+//                 onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+//               />
+//             ) : (
+//               <TextField
+//                 select
+//                 fullWidth
+//                 label="Project"
+//                 value={formData.project}
+//                 onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+//                 InputLabelProps={{ shrink: true }}
+//                 SelectProps={{ displayEmpty: true }}
+//                 sx={{ "& .MuiSelect-select": { padding: "16.5px 14px" } }}
+//               >
+//                 <MenuItem value="">
+//                   <em>Select Project</em>
+//                 </MenuItem>
+//                 {projects.map((p) => (
+//                   <MenuItem key={p._id} value={p._id}>
+//                     {p.projectName}
+//                   </MenuItem>
+//                 ))}
+//               </TextField>
+//             )}
+//           </Grid>
+
+//           <Grid item xs={12} md={4}>
+//             <TextField
+//               fullWidth
+//               label="Service Title"
+//               value={formData.serviceTitle}
+//               onChange={(e) => setFormData({ ...formData, serviceTitle: e.target.value })}
+//             />
+//           </Grid>
+
+//           <Grid item xs={12} md={4}>
+//             <TextField
+//               select
+//               fullWidth
+//               label="Location Type"
+//               value={formData.locationType}
+//               onChange={(e) => setFormData({ ...formData, locationType: e.target.value })}
+//               InputLabelProps={{ shrink: true }}
+//               SelectProps={{ displayEmpty: true }}
+//               sx={{ "& .MuiSelect-select": { padding: "16.5px 14px" } }}
+//             >
+//               <MenuItem value="">
+//                 <em>Select Location Type</em>
+//               </MenuItem>
+//               <MenuItem value="Muscat">Muscat</MenuItem>
+//               <MenuItem value="Outside Muscat">Outside Muscat</MenuItem>
+//             </TextField>
+//           </Grid>
+
+//           <Grid item xs={12} md={4}>
+//             <TextField
+//               fullWidth
+//               label="City"
+//               value={formData.city}
+//               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+//             />
+//           </Grid>
+//         </Grid>
+//       </Paper>
+
+//       {/* Add Service */}
+//       <Paper sx={{ p: 3, mb: 4 }}>
+//         <Button
+//           variant="contained"
+//           onClick={handleAddService}
+//           disabled={!formData.project || !formData.serviceTitle || !formData.locationType}
+//         >
+//           + Add Service
+//         </Button>
+//       </Paper>
+
+//       {/* Services Table */}
+//       {formData.services.length > 0 && (
+//         <Paper sx={{ p: 3, mb: 4 }}>
+//           <Typography variant="h6" mb={2}>
+//             Services
+//           </Typography>
+//           <Table>
+//             <TableHead>
+//               <TableRow>
+//                 <TableCell>Type</TableCell>
+//                 <TableCell>Rate</TableCell>
+//                 <TableCell>Unit</TableCell>
+//                 <TableCell>Qty</TableCell>
+//                 <TableCell>Cost</TableCell>
+//                 <TableCell>Margin (%)</TableCell>
+//                 <TableCell>Amount</TableCell>
+//                 <TableCell />
+//               </TableRow>
+//             </TableHead>
+//             <TableBody>
+//               {formData.services.map((item, index) => (
+//                 <TableRow key={index}>
+//                   <TableCell>
+//                     <TextField
+//                       select
+//                       fullWidth
+//                       value={item.type}
+//                       onChange={(e) => handleTypeChange(index, e.target.value)}
+//                       InputLabelProps={{ shrink: true }}
+//                       SelectProps={{ displayEmpty: true }}
+//                       sx={{ "& .MuiSelect-select": { padding: "16.5px 14px" } }}
+//                     >
+//                       <MenuItem value="">
+//                         <em>Select Service Type</em>
+//                       </MenuItem>
+//                       {servicesMaster.map((s) => (
+//                         <MenuItem key={s.serviceName} value={s.serviceName}>
+//                           {s.serviceName}
+//                         </MenuItem>
+//                       ))}
+//                     </TextField>
+//                   </TableCell>
+//                   <TableCell>{item.rate}</TableCell>
+//                   <TableCell>{item.unit}</TableCell>
+//                   <TableCell>
+//                     <TextField
+//                       type="number"
+//                       size="small"
+//                       value={item.quantity}
+//                       inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+//                       sx={{
+//                         "& input[type=number]::-webkit-outer-spin-button": { WebkitAppearance: "none", margin: 0 },
+//                         "& input[type=number]::-webkit-inner-spin-button": { WebkitAppearance: "none", margin: 0 },
+//                         "& input[type=number]": { MozAppearance: "textfield" },
+//                       }}
+//                       onChange={(e) => handleServiceChange(index, "quantity", e.target.value)}
+//                     />
+//                   </TableCell>
+//                   <TableCell><strong>{(item.cost || 0).toFixed(3)}</strong></TableCell>
+//                   <TableCell>
+//                     <TextField
+//                       type="number"
+//                       size="small"
+//                       value={item.margin}
+//                       inputProps={{ min: 30 }}
+//                       onChange={(e) => handleServiceChange(index, "margin", e.target.value)}
+//                       error={!!serviceErrors[index]?.margin}
+//                       helperText={serviceErrors[index]?.margin || ""}
+//                     />
+//                   </TableCell>
+//                   <TableCell><strong>{(item.amount || 0).toFixed(3)}</strong></TableCell>
+//                   <TableCell>
+//                     <IconButton onClick={() => handleDelete(index)}>
+//                       <DeleteIcon />
+//                     </IconButton>
+//                   </TableCell>
+//                 </TableRow>
+//               ))}
+//             </TableBody>
+//           </Table>
+
+//           <Divider sx={{ my: 2 }} />
+//           {/* <Typography variant="subtitle1" sx={{ textAlign: "right", mr: 2 }}>
+//             Total: {calculateTotal().toFixed(3)}
+//           </Typography> */}
+//           <Box
+//             sx={{
+//                 mt: 2,
+//                 display: "flex",
+//                 justifyContent: "flex-end",
+//             }}
+//             >
+//             <Typography
+//                 variant="subtitle1"
+//                 sx={{
+//                 fontWeight: 600,
+//                 display: "flex",
+//                 gap: 4,
+//                 flexWrap: "wrap",
+//                 }}
+//             >
+//                 <span>
+//                 Total Cost: {calculateTotalCost().toFixed(3)}
+//                 </span>
+
+//                 <span>
+//                 Total Margin: {calculateTotalMargin().toFixed(3)}
+//                 </span>
+
+//                 <span>
+//                 Total Amount: {calculateTotal().toFixed(3)}
+//                 </span>
+//             </Typography>
+//          </Box>
+
+//           <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
+//             <Button
+//               variant="contained"
+//               startIcon={<SaveIcon />}
+//               onClick={handleSave}
+//               disabled={isDemo}
+//             >
+//               Save
+//             </Button>
+//             <Button
+//               variant="outlined"
+//               startIcon={<FileDownloadIcon />}
+//               onClick={handleExport}
+//             >
+//               Export CSV
+//             </Button>
+//             <Button
+//               variant="outlined"
+//               startIcon={<PrintIcon />}
+//               onClick={handlePrintPDF}
+//             >
+//               Print PDF
+//             </Button>
+//           </Box>
+//         </Paper>
+//       )}
+
+//         <Snackbar
+//         open={snackbarOpen}
+//         autoHideDuration={2500}
+//         onClose={() => setSnackbarOpen(false)}
+//         anchorOrigin={{ vertical: "top", horizontal: "center" }}
+//         >
+//         <Alert
+//             severity={snackbarSeverity}
+//             onClose={() => setSnackbarOpen(false)}
+//             sx={{
+//             fontSize: "16px",
+//             fontWeight: 600,
+//             px: 4,
+//             py: 1.5,
+//             boxShadow: 6,
+//             minWidth: "300px",
+//             justifyContent: "center",
+//             }}
+//         >
+//             {snackbarMessage}
+//         </Alert>
+//         </Snackbar>
+//       {/* <Snackbar
+//         open={snackbarOpen}
+//         autoHideDuration={3000}
+//         onClose={() => setSnackbarOpen(false)}
+//         anchorOrigin={{ vertical: "top", horizontal: "right" }}
+//       >
+//         <Alert severity={snackbarSeverity} onClose={() => setSnackbarOpen(false)}>
+//           {snackbarMessage}
+//         </Alert>
+//       </Snackbar> */}
+//     </Box>
+//   );
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: { xs: 2, md: 4 }, backgroundColor: "#f5f7fa", minHeight: "100vh" }}>
+      {/* Back Button for Demo */}
       {isDemo && (
-        <Button variant="outlined" sx={{ mb: 2 }} onClick={() => window.history.back()}>
+        <Button
+          variant="contained"
+          sx={{
+            mb: 3,
+            background: "linear-gradient(90deg, #4facfe, #00f2fe)",
+            color: "#fff",
+            "&:hover": { background: "linear-gradient(90deg, #00c6ff, #0072ff)" },
+            boxShadow: 3,
+          }}
+          onClick={() => window.history.back()}
+        >
           Back
         </Button>
       )}
 
-      <Typography variant="h4" mb={4}>
+      <Typography variant="h4" mb={4} sx={{ fontWeight: "bold", color: "#344767" }}>
         Cost Calculation
       </Typography>
 
       {/* Project Details */}
-      <Paper sx={{ p: 3, mb: 4 }}>
-        <Typography variant="h6" mb={2}>
+      <Paper sx={{ p: 3, mb: 4, borderRadius: 3, boxShadow: 3, backgroundColor: "#ffffff" }}>
+        <Typography variant="h6" mb={2} sx={{ color: "#1976D2", fontWeight: 600 }}>
           Project Details
         </Typography>
         <Grid container spacing={3}>
+          {/* Project */}
           <Grid item xs={12} md={4}>
             {isDemo ? (
               <TextField
@@ -2030,6 +2317,7 @@ const CostCalculation = () => {
                 label="Project"
                 value={formData.project}
                 onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+                sx={{ "& .MuiInputBase-root": { backgroundColor: "#f0f3ff" } }}
               />
             ) : (
               <TextField
@@ -2040,7 +2328,10 @@ const CostCalculation = () => {
                 onChange={(e) => setFormData({ ...formData, project: e.target.value })}
                 InputLabelProps={{ shrink: true }}
                 SelectProps={{ displayEmpty: true }}
-                sx={{ "& .MuiSelect-select": { padding: "16.5px 14px" } }}
+                sx={{
+                  "& .MuiSelect-select": { padding: "16.5px 14px" },
+                  "& .MuiInputBase-root": { backgroundColor: "#f0f3ff" },
+                }}
               >
                 <MenuItem value="">
                   <em>Select Project</em>
@@ -2054,15 +2345,18 @@ const CostCalculation = () => {
             )}
           </Grid>
 
+          {/* Service Title */}
           <Grid item xs={12} md={4}>
             <TextField
               fullWidth
               label="Service Title"
               value={formData.serviceTitle}
               onChange={(e) => setFormData({ ...formData, serviceTitle: e.target.value })}
+              sx={{ "& .MuiInputBase-root": { backgroundColor: "#f0f3ff" } }}
             />
           </Grid>
 
+          {/* Location Type */}
           <Grid item xs={12} md={4}>
             <TextField
               select
@@ -2072,7 +2366,10 @@ const CostCalculation = () => {
               onChange={(e) => setFormData({ ...formData, locationType: e.target.value })}
               InputLabelProps={{ shrink: true }}
               SelectProps={{ displayEmpty: true }}
-              sx={{ "& .MuiSelect-select": { padding: "16.5px 14px" } }}
+              sx={{
+                "& .MuiSelect-select": { padding: "16.5px 14px" },
+                "& .MuiInputBase-root": { backgroundColor: "#f0f3ff" },
+              }}
             >
               <MenuItem value="">
                 <em>Select Location Type</em>
@@ -2082,37 +2379,45 @@ const CostCalculation = () => {
             </TextField>
           </Grid>
 
+          {/* City */}
           <Grid item xs={12} md={4}>
             <TextField
               fullWidth
               label="City"
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              sx={{ "& .MuiInputBase-root": { backgroundColor: "#f0f3ff" } }}
             />
           </Grid>
         </Grid>
       </Paper>
 
       {/* Add Service */}
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{ p: 3, mb: 4, borderRadius: 3, boxShadow: 3, backgroundColor: "#ffffff" }}>
         <Button
-          variant="contained"
-          onClick={handleAddService}
-          disabled={!formData.project || !formData.serviceTitle || !formData.locationType}
-        >
-          + Add Service
+            variant="contained"
+            onClick={handleAddService}
+            disabled={!formData.project || !formData.serviceTitle || !formData.locationType}
+            sx={{
+                background: "linear-gradient(90deg, #6ba6ff, #4a8cff)",
+                color: "#fff",
+                "&:hover": { background: "linear-gradient(90deg, #5a95ff, #3b7fe6)" },
+                boxShadow: 3,
+            }}
+            >
+            + Add Service
         </Button>
       </Paper>
 
       {/* Services Table */}
       {formData.services.length > 0 && (
-        <Paper sx={{ p: 3, mb: 4 }}>
-          <Typography variant="h6" mb={2}>
+        <Paper sx={{ p: 3, mb: 4, borderRadius: 3, boxShadow: 3, backgroundColor: "#ffffff" }}>
+          <Typography variant="h6" mb={2} sx={{ color: "#1976D2", fontWeight: 600 }}>
             Services
           </Typography>
           <Table>
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ backgroundColor: "#e8f0fe" }}>
                 <TableCell>Type</TableCell>
                 <TableCell>Rate</TableCell>
                 <TableCell>Unit</TableCell>
@@ -2125,7 +2430,7 @@ const CostCalculation = () => {
             </TableHead>
             <TableBody>
               {formData.services.map((item, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} hover>
                   <TableCell>
                     <TextField
                       select
@@ -2134,7 +2439,7 @@ const CostCalculation = () => {
                       onChange={(e) => handleTypeChange(index, e.target.value)}
                       InputLabelProps={{ shrink: true }}
                       SelectProps={{ displayEmpty: true }}
-                      sx={{ "& .MuiSelect-select": { padding: "16.5px 14px" } }}
+                      sx={{ "& .MuiSelect-select": { padding: "14px 12px" }, backgroundColor: "#f7f9fc" }}
                     >
                       <MenuItem value="">
                         <em>Select Service Type</em>
@@ -2155,9 +2460,11 @@ const CostCalculation = () => {
                       value={item.quantity}
                       inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
                       sx={{
+                        width: 80,
                         "& input[type=number]::-webkit-outer-spin-button": { WebkitAppearance: "none", margin: 0 },
                         "& input[type=number]::-webkit-inner-spin-button": { WebkitAppearance: "none", margin: 0 },
                         "& input[type=number]": { MozAppearance: "textfield" },
+                        backgroundColor: "#f7f9fc",
                       }}
                       onChange={(e) => handleServiceChange(index, "quantity", e.target.value)}
                     />
@@ -2172,11 +2479,12 @@ const CostCalculation = () => {
                       onChange={(e) => handleServiceChange(index, "margin", e.target.value)}
                       error={!!serviceErrors[index]?.margin}
                       helperText={serviceErrors[index]?.margin || ""}
+                      sx={{ width: 80, backgroundColor: "#f7f9fc" }}
                     />
                   </TableCell>
                   <TableCell><strong>{(item.amount || 0).toFixed(3)}</strong></TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleDelete(index)}>
+                    <IconButton onClick={() => handleDelete(index)} sx={{ color: "#e74c3c" }}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -2185,53 +2493,57 @@ const CostCalculation = () => {
             </TableBody>
           </Table>
 
-          <Divider sx={{ my: 2 }} />
-          {/* <Typography variant="subtitle1" sx={{ textAlign: "right", mr: 2 }}>
-            Total: {calculateTotal().toFixed(3)}
-          </Typography> */}
-          <Box
-            sx={{
-                mt: 2,
-                display: "flex",
-                justifyContent: "flex-end",
-            }}
-            >
-            <Typography
-                variant="subtitle1"
-                sx={{
-                fontWeight: 600,
-                display: "flex",
-                gap: 4,
-                flexWrap: "wrap",
-                }}
-            >
-                <span>
-                Total Cost: {calculateTotalCost().toFixed(3)}
-                </span>
-
-                <span>
-                Total Margin: {calculateTotalMargin().toFixed(3)}
-                </span>
-
-                <span>
-                Total Amount: {calculateTotal().toFixed(3)}
-                </span>
+          {/* Totals */}
+          <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end", flexWrap: "wrap", gap: 3 }}>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#344767" }}>
+              Total Cost: <strong>{calculateTotalCost().toFixed(3)}</strong>
             </Typography>
-         </Box>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#344767" }}>
+              Total Margin: <strong>{calculateTotalMargin().toFixed(3)}</strong>
+            </Typography>
+            <Typography variant="subtitle1" sx={{ fontWeight: 600, color: "#344767" }}>
+              Total Amount: <strong>{calculateTotal().toFixed(3)}</strong>
+            </Typography>
+          </Box>
 
-          <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
-            <Button
+          {/* Action Buttons */}
+          <Box sx={{ mt: 3, display: "flex", gap: 2, flexWrap: "wrap" }}>
+            {/* <Button
               variant="contained"
               startIcon={<SaveIcon />}
               onClick={handleSave}
               disabled={isDemo}
+              sx={{
+                background: "linear-gradient(90deg, #8996d0ff, #764ba2)",
+                "&:hover": { background: "linear-gradient(90deg, #5a67d8, #6b46c1)" },
+              }}
             >
               Save
+            </Button> */}
+            <Button
+                variant="contained"
+                startIcon={<SaveIcon />}
+                onClick={handleSave}
+                disabled={isDemo}
+                sx={{
+                    background: "linear-gradient(90deg, #8996d0, #764ba2)",
+                    color: "#fff",
+                    "&:hover": {
+                    background: "linear-gradient(90deg, #5a67d8, #6b46c1)",
+                    },
+                    "&.Mui-disabled": {
+                    background: "linear-gradient(90deg, #d1d1d1, #b5b5b5)",
+                    color: "#888",
+                    },
+                }}
+                >
+                Save
             </Button>
             <Button
               variant="outlined"
               startIcon={<FileDownloadIcon />}
               onClick={handleExport}
+              sx={{ borderColor: "#43e97b", color: "#43e97b", "&:hover": { backgroundColor: "#e6f7f1" } }}
             >
               Export CSV
             </Button>
@@ -2239,6 +2551,7 @@ const CostCalculation = () => {
               variant="outlined"
               startIcon={<PrintIcon />}
               onClick={handlePrintPDF}
+              sx={{ borderColor: "#38a1db", color: "#38a1db", "&:hover": { backgroundColor: "#e3f2fb" } }}
             >
               Print PDF
             </Button>
@@ -2246,16 +2559,17 @@ const CostCalculation = () => {
         </Paper>
       )}
 
-        <Snackbar
+      {/* Snackbar */}
+      <Snackbar
         open={snackbarOpen}
         autoHideDuration={2500}
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
+      >
         <Alert
-            severity={snackbarSeverity}
-            onClose={() => setSnackbarOpen(false)}
-            sx={{
+          severity={snackbarSeverity}
+          onClose={() => setSnackbarOpen(false)}
+          sx={{
             fontSize: "16px",
             fontWeight: 600,
             px: 4,
@@ -2263,21 +2577,11 @@ const CostCalculation = () => {
             boxShadow: 6,
             minWidth: "300px",
             justifyContent: "center",
-            }}
+          }}
         >
-            {snackbarMessage}
-        </Alert>
-        </Snackbar>
-      {/* <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert severity={snackbarSeverity} onClose={() => setSnackbarOpen(false)}>
           {snackbarMessage}
         </Alert>
-      </Snackbar> */}
+      </Snackbar>
     </Box>
   );
 };

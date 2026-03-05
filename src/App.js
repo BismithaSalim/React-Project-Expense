@@ -247,6 +247,7 @@
 
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import MainLayout from "./layout/MainLayout";
 import MainRoutes from "./routes/MainRoutes";
 import LoginPage from "./pages/login/LoginPage";
@@ -257,6 +258,8 @@ import FrontPage from "./pages/front";
 import ExecutiveDashboard from "./pages/executive/executiveDashboard";
 import CostCalculation from "./pages/costCalculator/costCalculation";
 import SuperAdminDashboard from "./pages/superadmin/superadminDashboard";
+
+const CLIENT_ID = "707824241932-rvlucrlqm4h1oe8vnggh7sp2ie3ccilf.apps.googleusercontent.com";
 
 function AppContent() {
 
@@ -327,8 +330,14 @@ function AppContent() {
 
 export default function App() {
   return (
+    // <BrowserRouter>
+    //   <AppContent />
+    // </BrowserRouter>
     <BrowserRouter>
-      <AppContent />
+      {/* Wrap the entire app with GoogleOAuthProvider */}
+      <GoogleOAuthProvider clientId={CLIENT_ID}>
+        <AppContent />
+      </GoogleOAuthProvider>
     </BrowserRouter>
   );
 }
