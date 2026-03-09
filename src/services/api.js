@@ -263,4 +263,9 @@ export const updateCostCalculation = async (data) => {
 export const getCostCalculation = async (projectId,serviceTitle,locationType) => {
   return await api.post(`/master/getCostCalculation`,{projectId,serviceTitle,locationType});
 };
+
+export const getAllCostCalculations = (filters = {}) => {
+  return api.post("/master/costSummary", filters);
+};
+
 export default api;

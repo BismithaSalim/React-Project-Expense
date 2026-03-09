@@ -298,6 +298,8 @@ import GroupIcon from "@mui/icons-material/Group";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import StorageIcon from "@mui/icons-material/Storage";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import CalculateIcon from "@mui/icons-material/Calculate";
+import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { logoutUser } from "../services/api";
@@ -312,6 +314,8 @@ const menuByRole = {
     { label: "Project Summary", path: "/projects/summary", icon: <AssessmentIcon /> },
     { label: "Master", path: "/master-data", icon: <StorageIcon /> },
     { label: "Rate Master", path: "/ratemaster/list", icon: <AttachMoneyIcon /> },
+    { label: "Service Cost Calculator", path: "/home/cost-calculation", icon: <CalculateIcon /> },
+    { label: "Project Cost Summary", path: "/cost-summary/list", icon: <PriceCheckIcon /> },
   ],
   viewer: [
     { label: "Clients", path: "/clients/list", icon: <PeopleIcon /> },

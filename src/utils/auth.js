@@ -11,7 +11,7 @@ export const getUser = () => {
 
 export const getRole = () => {
   const user = getUser();
-  console.log("user",user)
+  // console.log("user",user)
   return user?.role || null;
 };
 

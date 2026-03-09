@@ -70,6 +70,7 @@ const AddEditMaster = Loadable(lazy(() => import("../pages/master/AddEditMaster"
 const RateMasterList = Loadable(lazy(() => import("../pages/ratemaster/RateMasterList")));
 const RateAddEditMaster = Loadable(lazy(() => import("../pages/ratemaster/AddEditRateMaster")));
 const CostCalculation = Loadable(lazy(() => import("../pages/costCalculator/costCalculation")));
+const CostSummary = Loadable(lazy(() => import("../pages/costCalculator/costCalculationSummary")));
 
 const MainRoutes = {
   element: MainLayout, // just the component, not <MainLayout />
@@ -107,6 +108,7 @@ const MainRoutes = {
     { path: "/cost-calculation", element: <CostCalculation /> },
     { path: "/executive/cost-calculation", element: <CostCalculation /> },
     { path: "/home/cost-calculation", element: <CostCalculation /> },
+    { path: "/cost-summary/list", element: <CostSummary /> },
   ],
 };
 
