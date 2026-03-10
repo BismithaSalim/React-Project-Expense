@@ -71,6 +71,7 @@ const RateMasterList = Loadable(lazy(() => import("../pages/ratemaster/RateMaste
 const RateAddEditMaster = Loadable(lazy(() => import("../pages/ratemaster/AddEditRateMaster")));
 const CostCalculation = Loadable(lazy(() => import("../pages/costCalculator/costCalculation")));
 const CostSummary = Loadable(lazy(() => import("../pages/costCalculator/costCalculationSummary")));
+const ExpenseClaim = Loadable(lazy(() => import("../pages/expenseClaim/expenseClaimPage")));
 
 const MainRoutes = {
   element: MainLayout, // just the component, not <MainLayout />
@@ -109,6 +110,8 @@ const MainRoutes = {
     { path: "/executive/cost-calculation", element: <CostCalculation /> },
     { path: "/home/cost-calculation", element: <CostCalculation /> },
     { path: "/cost-summary/list", element: <CostSummary /> },
+    { path: "/executive/expense-claim", element: <ExpenseClaim /> },
+    { path: "/home/expense-claim", element: <ExpenseClaim /> },
   ],
 };
 

@@ -97,7 +97,7 @@ const ProjectSummary = () => {
 
   const doc = new jsPDF();
   doc.setFontSize(16);
-  doc.text("Project Cost Summary Report", 105, 15, { align: "center" });
+  doc.text("Service Cost Summary Report", 105, 15, { align: "center" });
   doc.line(14, 18, 196, 18);
 
   const tableBody = filteredData.map(record => {
@@ -127,7 +127,7 @@ const ProjectSummary = () => {
   return (
     <Box sx={{ p: 4, backgroundColor: "#f5f7fa", minHeight: "100vh" }}>
       <Typography variant="h4" mb={4} sx={{ fontWeight: "bold", color: "#344767" }}>
-        Project Cost Summary
+        Service Cost Summary
       </Typography>
 
       {/* Filters */}

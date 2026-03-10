@@ -11,6 +11,7 @@ import {
   Avatar
 } from "@mui/material";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 const ExecutiveDashboard = () => {
   const navigate = useNavigate();
@@ -21,6 +22,12 @@ const ExecutiveDashboard = () => {
       description: "Manage service cost calculation",
       icon: <CalculateIcon fontSize="large" />,
       route: "/executive/cost-calculation"
+    },
+    {
+      title: "Expense Claim",
+      description: "Claim your expense",
+      icon: <ReceiptLongIcon fontSize="large" />,
+      route: "/executive/expense-claim"
     }
   ];
 

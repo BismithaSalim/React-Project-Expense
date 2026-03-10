@@ -268,4 +268,22 @@ export const getAllCostCalculations = (filters = {}) => {
   return api.post("/master/costSummary", filters);
 };
 
+export const approveExpense = async (expenseId) => {
+  return await api.patch(`/expense/approveExpense/${expenseId}`);
+};
+export const rejectExpense = async (expenseId) => {
+  return await api.patch(`/expense/rejectExpense/${expenseId}`);
+};
+export const addUserExpense = (data) => api.post("/expense/createUserExpense", data);
+
+export const updateUserExpense = (id, data) => {
+  return api.post(`/expense/updateUserExpense?id=${id}`, data);
+};
+
+export const getUserExpense = async ({ userId, page = 1, limit = 5, showDeleted = false }) => {
+  return await api.get("/expense/getAllUserExpenses", {
+    params: { userId, page, limit, showDeleted }
+  });
+};
+
 export default api;

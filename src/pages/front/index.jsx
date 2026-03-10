@@ -146,6 +146,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import CalculateIcon from "@mui/icons-material/Calculate";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import { getRole } from "../../utils/auth";
 
 const FrontPage = () => {
@@ -188,6 +189,12 @@ const FrontPage = () => {
       description: "Manage service cost calculation",
       icon: <CalculateIcon fontSize="large" />,
       route: "/home/cost-calculation"
+    },
+    {
+      title: "Expense Claim",
+      description: "Claim the expenses",
+      icon: <ReceiptLongIcon fontSize="large" />,
+      route: "/home/expense-claim"
     },
   ];
 

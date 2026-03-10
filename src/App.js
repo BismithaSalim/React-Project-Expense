@@ -258,6 +258,7 @@ import FrontPage from "./pages/front";
 import ExecutiveDashboard from "./pages/executive/executiveDashboard";
 import CostCalculation from "./pages/costCalculator/costCalculation";
 import SuperAdminDashboard from "./pages/superadmin/superadminDashboard";
+import ExpenseClaim from "./pages/expenseClaim/expenseClaimPage";
 
 const CLIENT_ID = "707824241932-rvlucrlqm4h1oe8vnggh7sp2ie3ccilf.apps.googleusercontent.com";
 
@@ -287,6 +288,7 @@ function AppContent() {
       <Route path="/executive" element={<Navigate to="home" replace />} />
       <Route path="/executive/home" element={<ExecutiveDashboard />} />
       <Route path="executive/cost-calculation" element={<CostCalculation />} />
+      <Route path="/executive/expense-claim" element={<ExpenseClaim />} />
     </Route>
   </Route>
 
@@ -322,6 +324,7 @@ function AppContent() {
         ))}
       <Route path="/home" element={<FrontPage />} />
       <Route path="/home/cost-calculation" element={<CostCalculation />} />
+      <Route path="/home/expense-claim" element={<ExpenseClaim />} />
     </Route>
   </Route>
 </Routes>
