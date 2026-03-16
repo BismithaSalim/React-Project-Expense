@@ -147,6 +147,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import GavelIcon from "@mui/icons-material/Gavel";
 import { getRole } from "../../utils/auth";
 
 const FrontPage = () => {
@@ -196,6 +197,12 @@ const FrontPage = () => {
       icon: <ReceiptLongIcon fontSize="large" />,
       route: "/home/expense-claim"
     },
+    {
+      title: "Tender",
+      description: "Create, view, and manage all tenders and bids",
+      icon: <GavelIcon fontSize="large" />,
+      route: "/tender/list"
+    },
   ];
 
   return (
@@ -211,10 +218,10 @@ const FrontPage = () => {
 
       <Grid container spacing={4} justifyContent="center">
         {cards.map((card) => {
-          // disable "Service Cost Calculator" for viewer or expenseEditor
+          // disable "Service Cost Calculator" for viewer or editor
           const isDisabled =
             card.title === "Service Cost Calculator" &&
-            ["viewer", "expenseEditor"].includes(role);
+            ["viewer", "editor"].includes(role);
 
           return (
             <Grid item xs={12} sm={6} md={4} key={card.title}>

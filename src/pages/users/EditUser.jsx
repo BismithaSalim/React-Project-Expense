@@ -55,7 +55,7 @@ const queryParams = new URLSearchParams(location.search);
             email: user.email || "",
             mobileNo: user.mobileNo || "",
             password: "", // do NOT prefill password
-            role: user.role || "expenseEditor"
+            role: user.role || "editor"
           });
         } else {
           alert("Failed to load user");
@@ -189,7 +189,7 @@ const queryParams = new URLSearchParams(location.search);
             value={form.role}
             onChange={handleChange}
           >
-            <MenuItem value="expenseEditor">Expense Editor</MenuItem>
+            <MenuItem value="editor">Editor</MenuItem>
             <MenuItem value="viewer">Viewer</MenuItem>
             <MenuItem value="executive">Executive</MenuItem>
           </TextField>

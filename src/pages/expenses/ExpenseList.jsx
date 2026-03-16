@@ -773,7 +773,7 @@ const ExpenseList = () => {
             label={showDeleted ? "Showing Deleted" : "Showing Active"}
           />
 
-      {role !== "viewer" && role !== "expenseEditor" && (
+      {role !== "viewer" && role !== "editor" && (
           <Button
             variant="contained"
             color="primary"
@@ -840,7 +840,7 @@ const ExpenseList = () => {
                           color={e.isActive ? "error" : "success"}
                           onClick={() => handleDeleteRestore(e._id)}
                           title={e.isActive ? "Delete Expense" : "Restore Expense"}
-                          disabled={role === "viewer" || role === "expenseEditor"}
+                          disabled={role === "viewer" || role === "editor"}
                         >
                           <DeleteIcon fontSize="small" />
                         </IconButton>

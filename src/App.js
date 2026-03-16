@@ -259,11 +259,101 @@ import ExecutiveDashboard from "./pages/executive/executiveDashboard";
 import CostCalculation from "./pages/costCalculator/costCalculation";
 import SuperAdminDashboard from "./pages/superadmin/superadminDashboard";
 import ExpenseClaim from "./pages/expenseClaim/expenseClaimPage";
+import TenderForm from "./pages/tender/tenderForm";
+import TenderList from "./pages/tender/tenderList";
+import BotDashboard from "./pages/bot/botUserDashboard";
 
 const CLIENT_ID = "707824241932-rvlucrlqm4h1oe8vnggh7sp2ie3ccilf.apps.googleusercontent.com";
 
-function AppContent() {
+// function AppContent() {
 
+//   useEffect(() => {
+//     const handleStorageChange = (event) => {
+//       if (event.key === "token" && !event.newValue) {
+//         localStorage.clear();
+//         window.location.replace("/");
+//       }
+//     };
+
+//     window.addEventListener("storage", handleStorageChange);
+//     return () => window.removeEventListener("storage", handleStorageChange);
+//   }, []);
+
+//   return (
+// <Routes>
+//   {/* Login */}
+//   <Route path="/" element={<LoginPage />} />
+//   <Route path="/cost-calculation" element={<CostCalculation />} />
+
+//   {/* EXECUTIVE */}
+//   <Route element={<ProtectedRoute roles={["executive"]} />}>
+//     <Route element={<MainLayout />}>
+//       <Route path="/executive" element={<Navigate to="home" replace />} />
+//       <Route path="/executive/home" element={<ExecutiveDashboard />} />
+//       <Route path="executive/cost-calculation" element={<CostCalculation />} />
+//       <Route path="/executive/expense-claim" element={<ExpenseClaim />} />
+//     </Route>
+//   </Route>
+
+//   <Route element={<ProtectedRoute roles={["bot"]} />}>
+//     <Route element={<MainLayout />}>
+
+//       {/* redirect */}
+//       <Route path="/tender" element={<Navigate to="/tender/home" replace />} />
+
+//       {/* BOT dashboard */}
+//       <Route path="/tender/home" element={<BotDashboard />} />
+
+//       {/* Tender pages */}
+//       {/* <Route path="/bot/tender/list" element={<TenderList />} />
+//       <Route path="/bot/tender/add" element={<TenderForm />} />
+//       <Route path="/bot/tender/edit/:tenderId" element={<TenderForm />} /> */}
+
+//     </Route>
+//   </Route>
+
+
+//   {/* SUPER ADMIN */}
+//   <Route element={<ProtectedRoute roles={["superAdmin"]} />}>
+//     <Route element={<MainLayout />}>
+//       {MainRoutes.children
+//         .filter(
+//           (route) =>
+//             route.path.startsWith("/organisations") ||
+//             route.path.startsWith("/superadmin")
+//         )
+//         .map((route, idx) => (
+//           <Route key={idx} path={route.path} element={route.element} />
+//         ))}
+//       <Route path="/superadmin/home" element={<SuperAdminDashboard />} />
+//     </Route>
+//   </Route>
+
+//   {/* ADMIN / VIEWER / EXPENSE EDITOR */}
+//   <Route element={<ProtectedRoute roles={["admin", "viewer", "editor"]} />}>
+//     <Route element={<MainLayout />}>
+//       {MainRoutes.children
+//         .filter(
+//           (route) =>
+//             !route.path.startsWith("/organisations") &&
+//             !route.path.startsWith("/superadmin") &&
+//             !route.path.startsWith("/executive")
+//         )
+//         .map((route, idx) => (
+//           // console.log(route.path)
+//           <Route key={idx} path={route.path} element={route.element} />
+//         ))}
+//       <Route path="/home" element={<FrontPage />} />
+//       <Route path="/home/cost-calculation" element={<CostCalculation />} />
+//       <Route path="/home/expense-claim" element={<ExpenseClaim />} />
+//       {/* <Route path="/tender-source/add" element={<tenderSource />} /> */}
+//     </Route>
+//   </Route>
+// </Routes>
+//   );
+// }
+
+function AppContent() {
   useEffect(() => {
     const handleStorageChange = (event) => {
       if (event.key === "token" && !event.newValue) {
@@ -277,57 +367,72 @@ function AppContent() {
   }, []);
 
   return (
-<Routes>
-  {/* Login */}
-  <Route path="/" element={<LoginPage />} />
-  <Route path="/cost-calculation" element={<CostCalculation />} />
+    <Routes>
+      {/* LOGIN */}
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/cost-calculation" element={<CostCalculation />} />
 
-  {/* EXECUTIVE */}
-  <Route element={<ProtectedRoute roles={["executive"]} />}>
-    <Route element={<MainLayout />}>
-      <Route path="/executive" element={<Navigate to="home" replace />} />
-      <Route path="/executive/home" element={<ExecutiveDashboard />} />
-      <Route path="executive/cost-calculation" element={<CostCalculation />} />
-      <Route path="/executive/expense-claim" element={<ExpenseClaim />} />
-    </Route>
-  </Route>
+      {/* EXECUTIVE */}
+      <Route element={<ProtectedRoute roles={["executive"]} />}>
+        <Route element={<MainLayout />}>
+          <Route path="/executive" element={<Navigate to="home" replace />} />
+          <Route path="/executive/home" element={<ExecutiveDashboard />} />
+          <Route path="/executive/cost-calculation" element={<CostCalculation />} />
+          <Route path="/executive/expense-claim" element={<ExpenseClaim />} />
+        </Route>
+      </Route>
 
-  {/* SUPER ADMIN */}
-  <Route element={<ProtectedRoute roles={["superAdmin"]} />}>
-    <Route element={<MainLayout />}>
-      {MainRoutes.children
-        .filter(
-          (route) =>
-            route.path.startsWith("/organisations") ||
-            route.path.startsWith("/superadmin")
-        )
-        .map((route, idx) => (
-          <Route key={idx} path={route.path} element={route.element} />
-        ))}
-      <Route path="/superadmin/home" element={<SuperAdminDashboard />} />
-    </Route>
-  </Route>
+      {/* BOT & ADMIN/EDITOR/VIEWER tender routes */}
+      <Route element={<ProtectedRoute roles={["bot", "admin", "editor", "viewer"]} />}>
+        <Route element={<MainLayout />}>
+          {/* BOT dashboard */}
+          <Route path="/tender/home" element={<BotDashboard />} />
 
-  {/* ADMIN / VIEWER / EXPENSE EDITOR */}
-  <Route element={<ProtectedRoute roles={["admin", "viewer", "expenseEditor"]} />}>
-    <Route element={<MainLayout />}>
-      {MainRoutes.children
-        .filter(
-          (route) =>
-            !route.path.startsWith("/organisations") &&
-            !route.path.startsWith("/superadmin") &&
-            !route.path.startsWith("/executive")
-        )
-        .map((route, idx) => (
-          // console.log(route.path)
-          <Route key={idx} path={route.path} element={route.element} />
-        ))}
-      <Route path="/home" element={<FrontPage />} />
-      <Route path="/home/cost-calculation" element={<CostCalculation />} />
-      <Route path="/home/expense-claim" element={<ExpenseClaim />} />
-    </Route>
-  </Route>
-</Routes>
+          {/* Tender pages */}
+          <Route path="/tender/list" element={<TenderList />} />
+          <Route path="/tender/add" element={<TenderForm />} />
+          <Route path="/tender/edit/:tenderId" element={<TenderForm />} />
+
+          {/* Redirect /tender -> dashboard */}
+          <Route path="/tender" element={<Navigate to="/tender/home" replace />} />
+        </Route>
+      </Route>
+
+      {/* SUPER ADMIN */}
+      <Route element={<ProtectedRoute roles={["superAdmin"]} />}>
+        <Route element={<MainLayout />}>
+          {MainRoutes.children
+            .filter(
+              (route) =>
+                route.path.startsWith("/organisations") ||
+                route.path.startsWith("/superadmin")
+            )
+            .map((route, idx) => (
+              <Route key={idx} path={route.path} element={route.element} />
+            ))}
+          <Route path="/superadmin/home" element={<SuperAdminDashboard />} />
+        </Route>
+      </Route>
+
+      {/* ADMIN / VIEWER / EXPENSE EDITOR */}
+      <Route element={<ProtectedRoute roles={["admin", "viewer", "editor"]} />}>
+        <Route element={<MainLayout />}>
+          {MainRoutes.children
+            .filter(
+              (route) =>
+                !route.path.startsWith("/organisations") &&
+                !route.path.startsWith("/superadmin") &&
+                !route.path.startsWith("/executive")
+            )
+            .map((route, idx) => (
+              <Route key={idx} path={route.path} element={route.element} />
+            ))}
+          <Route path="/home" element={<FrontPage />} />
+          <Route path="/home/cost-calculation" element={<CostCalculation />} />
+          <Route path="/home/expense-claim" element={<ExpenseClaim />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

@@ -406,7 +406,7 @@ const ProjectList = () => {
             label="Show Deleted"
           />
 
-          {role !== "viewer" && role !== "expenseEditor" && (
+          {role !== "viewer" && role !== "editor" && (
           <Button variant="contained" onClick={() => navigate("/projects/add")}>
             Add Project
           </Button>
@@ -458,7 +458,7 @@ const ProjectList = () => {
                           color="primary"
                           onClick={() => navigate(`/projects/edit?id=${project._id}`)}
                           title="Edit Project"
-                          disabled={role === "viewer" || role === "expenseEditor"}
+                          disabled={role === "viewer" || role === "editor"}
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>
@@ -468,7 +468,7 @@ const ProjectList = () => {
                           color={project.isActive ? "error" : "success"}
                           onClick={() => handleDeleteRestore(project._id)}
                           title={project.isActive ? "Delete Project" : "Restore Project"}
-                          disabled={role === "viewer" || role === "expenseEditor"}
+                          disabled={role === "viewer" || role === "editor"}
                         >
                           <DeleteIcon fontSize="small" />
                         </IconButton>

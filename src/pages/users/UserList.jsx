@@ -128,7 +128,7 @@ const UserList = () => {
             label="Show Deleted"
           />
 
-          {role !== "viewer" && role !== "expenseEditor" && (
+          {role !== "viewer" && role !== "editor" && (
           <Button variant="contained" onClick={() => navigate("/users/add")}>
             Add User
           </Button>
@@ -176,7 +176,7 @@ const UserList = () => {
                           color="primary"
                           onClick={() => navigate(`/users/edit?id=${user._id}`)}
                           title="Edit User"
-                          disabled={role === "viewer" || role === "expenseEditor" }
+                          disabled={role === "viewer" || role === "editor" }
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>
@@ -186,7 +186,7 @@ const UserList = () => {
                           color={user.isActive ? "error" : "success"}
                           onClick={() => handleDeleteRestore(user._id,user.isActive)}
                           title={user.isActive ? "Delete User" : "Restore User"}
-                          disabled={role === "viewer" || role === "expenseEditor"}
+                          disabled={role === "viewer" || role === "editor"}
                         >
                           <DeleteIcon fontSize="small" />
                         </IconButton>

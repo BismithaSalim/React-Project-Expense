@@ -282,12 +282,14 @@ const LoginPage = () => {
 
         // Navigate based on role
         const role = res.data.data.role;
-        if (role === "admin" || role === "viewer" || role === "expenseEditor") {
+        if (role === "admin" || role === "viewer" || role === "editor") {
           navigate("/home");
         } else if (role === "superAdmin") {
           navigate("/superadmin/home");
         } else if (role === "executive") {
           navigate("/executive/home");
+        } else if (role === "bot") {
+          navigate("/tender/home");
         }
       } else {
         setSnackbar({

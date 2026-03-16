@@ -72,6 +72,10 @@ const RateAddEditMaster = Loadable(lazy(() => import("../pages/ratemaster/AddEdi
 const CostCalculation = Loadable(lazy(() => import("../pages/costCalculator/costCalculation")));
 const CostSummary = Loadable(lazy(() => import("../pages/costCalculator/costCalculationSummary")));
 const ExpenseClaim = Loadable(lazy(() => import("../pages/expenseClaim/expenseClaimPage")));
+const TenderSource = Loadable(lazy(() => import("../pages/tender/tenderSource")));
+const TenderForm = Loadable(lazy(() => import("../pages/tender/tenderForm")));
+const TenderList = Loadable(lazy(() => import("../pages/tender/tenderList")));
+const BotUserDashboard = Loadable(lazy(() => import("../pages/bot/botUserDashboard")));
 
 const MainRoutes = {
   element: MainLayout, // just the component, not <MainLayout />
@@ -112,6 +116,14 @@ const MainRoutes = {
     { path: "/cost-summary/list", element: <CostSummary /> },
     { path: "/executive/expense-claim", element: <ExpenseClaim /> },
     { path: "/home/expense-claim", element: <ExpenseClaim /> },
+    { path: "/settings/add", element: <TenderSource /> },
+    { path: "/tender/add", element: <TenderForm /> },
+    { path:"/tender/edit/:tenderId", element:<TenderForm /> },
+    { path: "/tender/list", element: <TenderList /> },
+    { path: "/bot/tender/add", element: <TenderForm /> },
+    { path:"/bot/tender/edit/:tenderId", element:<TenderForm /> },
+    { path: "/bot/tender/list", element: <TenderList /> },
+    { path: "/tender/home", element: <BotUserDashboard /> },
   ],
 };
 

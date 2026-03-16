@@ -26,7 +26,7 @@ const AddUser = () => {
     email: "",
     mobileNo: "",
     password: "",
-    role: "expenseEditor"
+    role: ""
   });
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -164,9 +164,10 @@ const AddUser = () => {
             value={form.role}
             onChange={handleChange}
           >
-            <MenuItem value="expenseEditor">Expense Editor</MenuItem>
+            <MenuItem value="editor">Editor</MenuItem>
             <MenuItem value="viewer">Viewer</MenuItem>
             <MenuItem value="executive">Executive</MenuItem>
+            <MenuItem value="bot">BOT</MenuItem>
           </TextField>
 
           <Stack direction="row" spacing={2} justifyContent="flex-end">

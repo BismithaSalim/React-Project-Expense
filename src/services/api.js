@@ -77,13 +77,10 @@ export const getUserById = (userId) => {
 // };
 
 
+/////////////////////////////// PROJECTS /////////////////////////////////////////////
 
-// PROJECTS
 export const addProject = (data) => api.post("/project/addProject", data);
-// export const getProjects = () => api.get("/project/getAllProjects");
-// export const getProjects = (page = 1, limit = 10) => {
-//   return api.get(`/project/getAllProjects?page=${page}&limit=${limit}`);
-// };
+
 export const getProjectById = (projectId) => {
   return api.get(`/project/getProjectById?projectId=${projectId}`);
 };
@@ -101,7 +98,8 @@ export const deleteProject = async (projectId) => {
   return await api.patch(`/project/deleteProject/${projectId}`);
 };
 
-// EXPENSES
+///////////////////////////// EXPENSES /////////////////////////////////////////
+
 export const addExpense = (data) => api.post("/expense/addExpense", data);
 // export const getExpenses = () => api.get("/expense/getAllExpenses");
 export const getProjectsByClient = (clientId) => {
@@ -122,13 +120,10 @@ export const deleteExpense = async (expenseId) => {
   return await api.patch(`/expense/deleteExpense/${expenseId}`);
 };
 
-// USER
+//////////////////////////  USER ////////////////////////////////////////////
 export const loginUser = (data) => api.post("/user/login", data);
 export const logoutUser = (token) =>
   api.post("/user/logout", {}, { headers: { Authorization: `Bearer ${token}` } });
-  // api.post("/user/logout", {}, { headers: { Authorization: `Bearer ${token}` } });
-
-
 
 // P&L Summary
 export const getProjectPLSummary = (projectId) => {
@@ -153,14 +148,10 @@ export const getProjectFinancials = () => {
 };
 
 
-// Organisation APIs
+////////////////////// Organisation APIs ///////////////////////////
 export const createOrganisation = async (data) => {
   return await api.post("/org/addOrganisation", data);
 };
-
-// export const getOrganisations = async () => {
-//   return await api.get("/org/organisationList");
-// };
 
 export const getOrganisations = async (showDeleted = false, page = 1, limit = 10) => {
   return await api.get("/org/organisationList", {
@@ -217,6 +208,7 @@ export const deleteMasterData = async (id) => {
   return await api.patch(`/master/deleteMaster/${id}`);
 };
 
+///////////////////////////////// RATE MASTER ////////////////////////////////////
 
 export const createRateMaster = async (data) => {
   return await api.post("/master/addRateMaster", data);
@@ -252,6 +244,8 @@ export const getProject = async (showDeleted = false, search) => {
   });
 };
 
+/////////////////////////////////// SERVICE COST CALCULATION ///////////////////////////////
+
 export const createCostCalculation = async (data) => {
   return await api.post(`/master/createCostCalculation`,data);
 };
@@ -267,6 +261,8 @@ export const getCostCalculation = async (projectId,serviceTitle,locationType) =>
 export const getAllCostCalculations = (filters = {}) => {
   return api.post("/master/costSummary", filters);
 };
+
+//////////////////////////////// EXPENSE CLAIM ////////////////////////////////////
 
 export const approveExpense = async (expenseId) => {
   return await api.patch(`/expense/approveExpense/${expenseId}`);
@@ -284,6 +280,32 @@ export const getUserExpense = async ({ userId, page = 1, limit = 5, showDeleted 
   return await api.get("/expense/getAllUserExpenses", {
     params: { userId, page, limit, showDeleted }
   });
+};
+
+////////////////////////TENDERS///////////////////////////////////////////////////
+
+export const addSettings = (data) => api.post("/tender/addSettings", data);
+export const getSettings =  async () => {
+  return await api.get("/tender/getSettings")
+};
+
+export const addTender = (data) => api.post("/tender/addTender", data);
+export const getTenders = async (showDeleted = false , search) => {
+  return api.get("/tender/getTenders" ,{
+    params: {showDeleted,search }
+  })
+};
+
+export const deleteTender = async (id) => {
+  return api.patch(`/tender/deleteTender/${id}`);
+};
+
+export const updateTender = (id, data) => {
+  return api.put(`/tender/updateTender/${id}`, data);
+};
+
+export const getTenderById = async (id) => {
+  return await api.get(`/tender/getTenderById/${id}`);
 };
 
 export default api;

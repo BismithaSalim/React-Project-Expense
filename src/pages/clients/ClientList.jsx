@@ -499,7 +499,7 @@ const ClientList = () => {
             }
             label="Show Deleted"
           />
-          {role !== "viewer" && role !== "expenseEditor" && (
+          {role !== "viewer" && role !== "editor" && (
           <Button variant="contained" color="primary" onClick={() => navigate("/clients/add")}>
             Add Client
           </Button>
@@ -539,14 +539,14 @@ const ClientList = () => {
                           <IconButton
                             color="primary"
                             onClick={() => navigate(`/clients/edit?id=${client._id}`)}
-                            disabled={role === "viewer" || role === "expenseEditor"}
+                            disabled={role === "viewer" || role === "editor"}
                           >
                             <EditIcon />
                           </IconButton>
                           <IconButton
                             color={client.isActive ? "error" : "success"}
                             onClick={() => handleDeleteRestoreClient(client._id, client.isActive)}
-                            disabled={role === "viewer" || role === "expenseEditor"}
+                            disabled={role === "viewer" || role === "editor"}
                           >
                             <DeleteIcon />
                           </IconButton>

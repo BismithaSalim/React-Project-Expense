@@ -301,6 +301,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import PriceCheckIcon from "@mui/icons-material/PriceCheck";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import GavelIcon from "@mui/icons-material/Gavel";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { logoutUser } from "../services/api";
@@ -318,6 +320,8 @@ const menuByRole = {
     { label: "Service Cost Calculator", path: "/home/cost-calculation", icon: <CalculateIcon /> },
     { label: "Service Cost Summary", path: "/cost-summary/list", icon: <PriceCheckIcon /> },
     { label: "Expense Claim", path: "/home/expense-claim", icon: <ReceiptLongIcon /> },
+    { label: "Settings", path: "/settings/add", icon: <MailOutlineIcon /> },
+    { label: "Tenders", path: "/tender/list", icon: <GavelIcon /> },
   ],
   viewer: [
     { label: "Clients", path: "/clients/list", icon: <PeopleIcon /> },
@@ -327,7 +331,7 @@ const menuByRole = {
     { label: "Project Summary", path: "/projects/summary", icon: <AssessmentIcon /> },
     { label: "Expense Claim", path: "/home/expense-claim", icon: <ReceiptLongIcon /> },
   ],
-  expenseEditor: [
+  editor: [
     { label: "Clients", path: "/clients/list", icon: <PeopleIcon /> },
     { label: "Projects", path: "/projects/list", icon: <WorkIcon /> },
     { label: "Expenses", path: "/expenses/list", icon: <MonetizationOnIcon /> },
@@ -359,6 +363,7 @@ const Navbar = () => {
   else if (pathname.includes("/users")) backLink = "/users/list";
   else if (pathname.includes("/master-data")) backLink = "/master-data";
   else if (pathname.includes("/ratemaster")) backLink = "/ratemaster/list";
+  else if (pathname.includes("/tender")) backLink = "/tender/list";
 
   const handleLogout = async () => {
     try {
