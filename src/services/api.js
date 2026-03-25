@@ -308,4 +308,8 @@ export const getTenderById = async (id) => {
   return await api.get(`/tender/getTenderById/${id}`);
 };
 
+export const tenderLogin = async (data) => {
+  return await api.post("/user/tenderLogin", data);
+};
+
 export default api;
