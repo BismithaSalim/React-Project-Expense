@@ -76,6 +76,7 @@ const TenderSource = Loadable(lazy(() => import("../pages/tender/tenderSource"))
 const TenderForm = Loadable(lazy(() => import("../pages/tender/tenderForm")));
 const TenderList = Loadable(lazy(() => import("../pages/tender/tenderList")));
 const BotUserDashboard = Loadable(lazy(() => import("../pages/bot/botUserDashboard")));
+const TenderExcelView = Loadable(lazy(() => import("../pages/tender/TenderExcelView")));
 
 const MainRoutes = {
   element: MainLayout, // just the component, not <MainLayout />
@@ -124,6 +125,7 @@ const MainRoutes = {
     { path:"/bot/tender/edit/:tenderId", element:<TenderForm /> },
     { path: "/bot/tender/list", element: <TenderList /> },
     { path: "/tender/home", element: <BotUserDashboard /> },
+    { path: "/tender/excel-view", element: <TenderExcelView />}
   ],
 };
 
