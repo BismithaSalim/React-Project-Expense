@@ -262,6 +262,7 @@ import ExpenseClaim from "./pages/expenseClaim/expenseClaimPage";
 import TenderForm from "./pages/tender/tenderForm";
 import TenderList from "./pages/tender/tenderList";
 import BotDashboard from "./pages/bot/botUserDashboard";
+import TenderExcelView  from "./pages/tender/TenderExcelView";
 
 const CLIENT_ID = "707824241932-rvlucrlqm4h1oe8vnggh7sp2ie3ccilf.apps.googleusercontent.com";
 
@@ -392,6 +393,7 @@ function AppContent() {
           <Route path="/tender/list" element={<TenderList />} />
           <Route path="/tender/add" element={<TenderForm />} />
           <Route path="/tender/edit/:tenderId" element={<TenderForm />} />
+          <Route path="/tender/excel-view" element={<TenderExcelView />} />
 
           {/* Redirect /tender -> dashboard */}
           <Route path="/tender" element={<Navigate to="/tender/home" replace />} />
