@@ -1,148 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import {
-//   Box, Typography, Paper, Table, TableHead, TableRow, TableCell,
-//   TableBody, IconButton, CircularProgress, Snackbar, Alert, Tooltip,
-//   Dialog, DialogTitle, DialogContent, DialogActions, Grid, Button
-// } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
-// import { getTenders, deleteTender } from "../../services/api";
-// import VisibilityIcon from "@mui/icons-material/Visibility";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
-// const TenderList = () => {
-//   const [tenders, setTenders] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
-//   const [detailsDialog, setDetailsDialog] = useState({ open: false, tender: null });
-
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-//     fetchTenders();
-//   }, []);
-
-//   const fetchTenders = async () => {
-//     try {
-//       setLoading(true);
-//       const response = await getTenders();
-//       if (response?.data?.status === 100) {
-//         setTenders(response.data.data);
-//       } else {
-//         setSnackbar({ open: true, message: response?.data?.message || "Failed to fetch tenders", severity: "error" });
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       setSnackbar({ open: true, message: "Error fetching tenders", severity: "error" });
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleDelete = async (id) => {
-//     if (!window.confirm("Are you sure you want to delete this tender?")) return;
-//     try {
-//       const response = await deleteTender(id);
-//       if (response?.data?.status === 100) {
-//         setSnackbar({ open: true, message: "Tender deleted successfully!", severity: "success" });
-//         fetchTenders();
-//       } else {
-//         setSnackbar({ open: true, message: response?.data?.message || "Failed to delete", severity: "error" });
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       setSnackbar({ open: true, message: "Error deleting tender", severity: "error" });
-//     }
-//   };
-
-// //   const handleViewDetails = (tender) => {
-// //     setDetailsDialog({ open: true, tender });
-// //   };
-
-//   return (
-//     <Box sx={{ maxWidth: 1200, mx: "auto", mt: 4, mb: 4 }}>
-//       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-//         <Typography variant="h5" fontWeight="bold">Tender List</Typography>
-//         <Button variant="contained" color="primary" onClick={() => navigate("/tender/add")}>Add Tender</Button>
-//       </Box>
-
-//       {loading ? (
-//         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}><CircularProgress /></Box>
-//       ) : (
-//         <Paper>
-//           <Table>
-//             <TableHead>
-//               <TableRow>
-//                 <TableCell><b>Tender Title</b></TableCell>
-//                 <TableCell><b>Tender No</b></TableCell>
-//                 <TableCell><b>Entity</b></TableCell>
-//                 <TableCell><b>Bid Opened</b></TableCell>
-//                 <TableCell><b>Tender Action</b></TableCell>
-//                 <TableCell><b>Actions</b></TableCell>
-//               </TableRow>
-//             </TableHead>
-//             <TableBody>
-//               {tenders.length === 0 ? (
-//                 <TableRow>
-//                   <TableCell colSpan={6} align="center">No tenders found</TableCell>
-//                 </TableRow>
-//               ) : (
-//                 tenders.map((t) => (
-//                   <TableRow key={t._id}>
-//                     <TableCell>{t.tenderTitle}</TableCell>
-//                     <TableCell>{t.tenderNo}</TableCell>
-//                     <TableCell>{t.entity}</TableCell>
-//                     <TableCell>{t.bidOpened ? "Yes" : "No"}</TableCell>
-//                     <TableCell>{t.tenderAction}</TableCell>
-//                     <TableCell>
-//                       {/* <Tooltip title="View Details">
-//                         <IconButton color="primary" onClick={() => handleViewDetails(t)}><VisibilityIcon /></IconButton>
-//                       </Tooltip> */}
-//                       <Tooltip title="Edit">
-//                         <IconButton color="success" onClick={() => navigate(`/tender/edit/${t._id}`)}><EditIcon /></IconButton>
-//                       </Tooltip>
-//                       <Tooltip title="Delete">
-//                         <IconButton color="error" onClick={() => handleDelete(t._id)}><DeleteIcon /></IconButton>
-//                       </Tooltip>
-//                     </TableCell>
-//                   </TableRow>
-//                 ))
-//               )}
-//             </TableBody>
-//           </Table>
-//         </Paper>
-//       )}
-
-//       {/* Details Dialog */}
-//       <Dialog open={detailsDialog.open} onClose={() => setDetailsDialog({ open: false, tender: null })} maxWidth="md" fullWidth>
-//         <DialogTitle>Tender Details</DialogTitle>
-//         <DialogContent dividers>
-//           {detailsDialog.tender && (
-//             <Grid container spacing={2}>
-//               {Object.entries(detailsDialog.tender).map(([key, value]) => (
-//                 <Grid item xs={12} sm={6} key={key}>
-//                   <Typography variant="subtitle2">{key}</Typography>
-//                   <Typography variant="body2">{String(value)}</Typography>
-//                 </Grid>
-//               ))}
-//             </Grid>
-//           )}
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={() => setDetailsDialog({ open: false, tender: null })}>Close</Button>
-//         </DialogActions>
-//       </Dialog>
-
-//       <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ ...snackbar, open: false })} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-//         <Alert severity={snackbar.severity} onClose={() => setSnackbar({ ...snackbar, open: false })}>{snackbar.message}</Alert>
-//       </Snackbar>
-//     </Box>
-//   );
-// };
-
-// export default TenderList;
-
-// src/pages/TenderList.js
 
 //////////////////////////////OG/////////////////////////////////////
 
@@ -683,6 +538,256 @@
 // export default TenderList;
 
 
+// import React, { useState, useEffect } from "react";
+// import {
+//   Box,
+//   Typography,
+//   Button,
+//   Paper,
+//   Table,
+//   TableHead,
+//   TableRow,
+//   TableCell,
+//   TableBody,
+//   Switch,
+//   FormControlLabel,
+//   IconButton,
+//   Tooltip,
+//   CircularProgress,
+//   Snackbar,
+//   Alert,
+//   Collapse,
+// } from "@mui/material";
+// import {
+//   Edit as EditIcon,
+//   Delete as DeleteIcon,
+//   Restore as RestoreIcon,
+//   KeyboardArrowDown as KeyboardArrowDownIcon,
+//   KeyboardArrowUp as KeyboardArrowUpIcon,
+// } from "@mui/icons-material";
+// import { useNavigate } from "react-router-dom";
+// import { getTenders, deleteTender } from "../../services/api";
+// import { getRole } from "../../utils/auth"; // your role util
+
+// // Collapsible Row Component
+// const TenderRow = ({ tender, showDeleted, role, handleDelete, navigate }) => {
+//   const [open, setOpen] = useState(false);
+
+//   return (
+//     <>
+//       <TableRow>
+//         <TableCell>
+//           <IconButton size="small" onClick={() => setOpen(!open)}>
+//             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+//           </IconButton>
+//         </TableCell>
+//         <TableCell>{tender.tenderTitle}</TableCell>
+//         <TableCell>{tender.tenderNo}</TableCell>
+//         <TableCell>{tender.entity}</TableCell>
+//         <TableCell>{tender.bidOpened ? "Yes" : "No"}</TableCell>
+//         <TableCell>{tender.tenderAction}</TableCell>
+//         <TableCell>
+//           {!showDeleted && (
+//             <Tooltip title="Edit">
+//               <IconButton
+//                 color="success"
+//                 onClick={() => navigate(`/tender/edit/${tender._id}`)}
+//                 disabled={role === "viewer"}
+//               >
+//                 <EditIcon />
+//               </IconButton>
+//             </Tooltip>
+//           )}
+//           {showDeleted ? (
+//             <Tooltip title="Restore">
+//               <IconButton
+//                 color="success"
+//                 onClick={() => handleDelete(tender._id)}
+//                 disabled={role === "viewer"}
+//               >
+//                 <RestoreIcon />
+//               </IconButton>
+//             </Tooltip>
+//           ) : (
+//             <Tooltip title="Delete">
+//               <IconButton
+//                 color="error"
+//                 onClick={() => handleDelete(tender._id)}
+//                 disabled={role === "viewer"}
+//               >
+//                 <DeleteIcon />
+//               </IconButton>
+//             </Tooltip>
+//           )}
+//         </TableCell>
+//       </TableRow>
+
+//       {/* Collapsible Details */}
+//       <TableRow>
+//         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+//           <Collapse in={open} timeout="auto" unmountOnExit>
+//             <Box margin={2}>
+//               <Typography variant="subtitle1" fontWeight="bold">
+//                 Tender Details
+//               </Typography>
+//               <Typography variant="body2"><b>Portal:</b> {tender.portal || "-"}</Typography>
+//               <Typography variant="body2"><b>Sales End Date:</b> {tender.tenderSalesEndDate || "-"}</Typography>
+//               <Typography variant="body2"><b>Prebid Clarification End Date:</b> {tender.prebidClarificationEndDate || "-"}</Typography>
+//               <Typography variant="body2"><b>Bid Closing Date:</b> {tender.bidClosingDate || "-"}</Typography>
+//               <Typography variant="body2"><b>Tender Fee:</b> {tender.tenderFee || "-"}</Typography>
+//               <Typography variant="body2"><b>Category:</b> {tender.category || "-"}</Typography>
+//               <Typography variant="body2"><b>Action:</b> {tender.action || "-"}</Typography>
+//               <Typography variant="body2"><b>Action URL:</b> {tender.actionUrl || "-"}</Typography>
+//               <Typography variant="body2"><b>Bid Opened:</b> {tender.bidOpened ? "Yes" : "No"}</Typography>
+//             </Box>
+//           </Collapse>
+//         </TableCell>
+//       </TableRow>
+//     </>
+//   );
+// };
+
+// // Main Tender List Page
+// const TenderList = () => {
+//   const [tenders, setTenders] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+//   const [showDeleted, setShowDeleted] = useState(false);
+
+//   const navigate = useNavigate();
+//   const role = getRole();
+
+//   useEffect(() => {
+//     fetchTenders();
+//   }, [showDeleted]);
+
+//   const fetchTenders = async () => {
+//     try {
+//       setLoading(true);
+//       const response = await getTenders(showDeleted);
+//       if (response?.data?.status === 100) {
+//         setTenders(response.data.data);
+//       } else {
+//         setSnackbar({ open: true, message: response?.data?.message || "Failed to fetch tenders", severity: "error" });
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       setSnackbar({ open: true, message: "Error fetching tenders", severity: "error" });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleDelete = async (id) => {
+//     try {
+//       const confirmMessage = showDeleted ? "Do you want to restore this tender?" : "Are you sure you want to delete this tender?";
+//       if (!window.confirm(confirmMessage)) return;
+
+//       const response = await deleteTender(id);
+//       if (response?.data?.status === 100) {
+//         setSnackbar({
+//           open: true,
+//           message: showDeleted ? "Tender restored successfully!" : "Tender deleted successfully!",
+//           severity: "success",
+//         });
+//         fetchTenders();
+//       } else {
+//         setSnackbar({ open: true, message: response?.data?.message || "Action failed", severity: "error" });
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       setSnackbar({ open: true, message: "Error performing action", severity: "error" });
+//     }
+//   };
+
+//   return (
+//     <Box sx={{ maxWidth: 1200, mx: "auto", mt: 4, mb: 4 }}>
+//       {/* Top Toolbar */}
+//       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+//         <Typography variant="h5" fontWeight="bold">Tender List</Typography>
+
+//         <FormControlLabel
+//           control={<Switch checked={showDeleted} onChange={(e) => setShowDeleted(e.target.checked)} />}
+//           label="Show Deleted"
+//         />
+
+//         <Button
+//           variant="contained"
+//           color="primary"
+//           onClick={() => navigate("/tender/add")}
+//           disabled={role === "viewer" || role === "editor"}
+//         >
+//           Add Tender
+//         </Button>
+
+//         {/* Excel View Button */}
+//         <Button
+//           variant="outlined"
+//           onClick={() => navigate("/tender/excel-view", { state: { tenders } })}
+//         >
+//           View All
+//         </Button>
+//       </Box>
+
+//       {loading ? (
+//         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+//           <CircularProgress />
+//         </Box>
+//       ) : (
+//         <Paper>
+//           <Table>
+//             <TableHead>
+//               <TableRow>
+//                 <TableCell /> {/* Arrow */}
+//                 <TableCell><b>Tender Title</b></TableCell>
+//                 <TableCell><b>Tender No</b></TableCell>
+//                 <TableCell><b>Entity</b></TableCell>
+//                 <TableCell><b>Bid Opened</b></TableCell>
+//                 <TableCell><b>Tender Action</b></TableCell>
+//                 <TableCell><b>Actions</b></TableCell>
+//               </TableRow>
+//             </TableHead>
+//             <TableBody>
+//               {tenders.length === 0 ? (
+//                 <TableRow>
+//                   <TableCell colSpan={7} align="center">No tenders found</TableCell>
+//                 </TableRow>
+//               ) : (
+//                 tenders.map((t) => (
+//                   <TenderRow
+//                     key={t._id}
+//                     tender={t}
+//                     showDeleted={showDeleted}
+//                     role={role}
+//                     handleDelete={handleDelete}
+//                     navigate={navigate}
+//                   />
+//                 ))
+//               )}
+//             </TableBody>
+//           </Table>
+//         </Paper>
+//       )}
+
+//       {/* Snackbar */}
+//       <Snackbar
+//         open={snackbar.open}
+//         autoHideDuration={3000}
+//         onClose={() => setSnackbar({ ...snackbar, open: false })}
+//         anchorOrigin={{ vertical: "top", horizontal: "center" }}
+//       >
+//         <Alert severity={snackbar.severity} onClose={() => setSnackbar({ ...snackbar, open: false })}>
+//           {snackbar.message}
+//         </Alert>
+//       </Snackbar>
+//     </Box>
+//   );
+// };
+
+// export default TenderList;
+
+
+
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -712,7 +817,10 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { getTenders, deleteTender } from "../../services/api";
-import { getRole } from "../../utils/auth"; // your role util
+import { getRole } from "../../utils/auth"; 
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { FileDownload as FileDownloadIcon, Visibility as VisibilityIcon, Add as AddIcon } from "@mui/icons-material";
 
 // Collapsible Row Component
 const TenderRow = ({ tender, showDeleted, role, handleDelete, navigate }) => {
@@ -845,42 +953,84 @@ const TenderList = () => {
     }
   };
 
+  // Export to Excel function
+  const exportToExcel = () => {
+    if (!tenders.length) return;
+
+    const data = tenders.map(t => ({
+      "Title": t.tenderTitle,
+      "Tender No": t.tenderNo,
+      "Portal": t.portal,
+      "Entity": t.entity,
+      "Category": t.category,
+      "Fee": t.tenderFee,
+      "Sales End": t.tenderSalesEndDate ? new Date(t.tenderSalesEndDate).toLocaleDateString() : "-",
+      "Prebid End": t.prebidClarificationEndDate ? new Date(t.prebidClarificationEndDate).toLocaleDateString() : "-",
+      "Bid Closing": t.bidClosingDate ? new Date(t.bidClosingDate).toLocaleDateString() : "-",
+      "Action": t.tenderAction,
+      "URL": t.actionUrl || "-",
+      "Bid Opened": t.bidOpened ? "Yes" : "No",
+      "Created": t.createdAt ? new Date(t.createdAt).toLocaleDateString() : "-"
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Tenders");
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(blob, "TenderList.xlsx");
+  };
+
   return (
-    <Box sx={{ maxWidth: 1200, mx: "auto", mt: 4, mb: 4 }}>
-      {/* Top Toolbar */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-        <Typography variant="h5" fontWeight="bold">Tender List</Typography>
+    <Box sx={{ maxWidth: 1400, mx: "auto", mt: 4, mb: 4 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2, flexWrap: "wrap" }}>
+        <Typography variant="h5" fontWeight="bold" sx={{ flexGrow: 1 }}>
+          Tender List
+        </Typography>
 
         <FormControlLabel
           control={<Switch checked={showDeleted} onChange={(e) => setShowDeleted(e.target.checked)} />}
           label="Show Deleted"
         />
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate("/tender/add")}
-          disabled={role === "viewer" || role === "editor"}
-        >
-          Add Tender
-        </Button>
+        {/* Action Buttons */}
+        <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={() => navigate("/tender/add")}
+            disabled={role === "viewer" || role === "editor"}
+          >
+            Add Tender
+          </Button>
 
-        {/* Excel View Button */}
-        <Button
-          variant="outlined"
-          onClick={() => navigate("/tender/excel-view", { state: { tenders } })}
-        >
-          View All
-        </Button>
+          <Button
+            variant="outlined"
+            color="info"
+            startIcon={<VisibilityIcon />}
+            onClick={() => navigate("/tender/excel-view", { state: { tenders } })}
+          >
+            View All
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="success"
+            startIcon={<FileDownloadIcon />}
+            onClick={exportToExcel}
+          >
+            Download Excel
+          </Button>
+        </Box>
       </Box>
-
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <CircularProgress />
         </Box>
       ) : (
-        <Paper>
-          <Table>
+        <Paper sx={{ overflowX: "auto" }}>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell /> {/* Arrow */}
@@ -914,7 +1064,6 @@ const TenderList = () => {
         </Paper>
       )}
 
-      {/* Snackbar */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={3000}

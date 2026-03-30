@@ -213,7 +213,8 @@ const FrontPage = () => {
         gutterBottom
         sx={{ fontWeight: 700, mb: 5 }}
       >
-        Project Expense Management
+        {/* Project Expense Management */}
+        Business Management Control
       </Typography>
 
       <Grid container spacing={4} justifyContent="center">

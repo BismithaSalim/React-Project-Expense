@@ -420,7 +420,8 @@ const Navbar = () => {
 
           <Box sx={{ flexGrow: 1, textAlign: "center" }}>
             <Typography variant="h6" sx={{ fontWeight: 600 }}>
-              Project Expense Management
+              {/* Project Expense Management */}
+              Business Management Control
             </Typography>
           </Box>
 
