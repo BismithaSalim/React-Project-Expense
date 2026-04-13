@@ -463,7 +463,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import LinkIcon from "@mui/icons-material/Link";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 
-const portalTypes = ["Etendering", "OQ", "OBB", "Omantel", "PDO", "Others"];
+const portalTypes = ["Etendering", "OQ", "OBB", "Omantel", "PDO","Asyad","ROP","Others"];
 const tenderActions = ["Bid", "No Bid"];
 
 const AddTender = () => {
