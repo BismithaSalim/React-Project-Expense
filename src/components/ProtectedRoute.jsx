@@ -46,7 +46,7 @@ const ProtectedRoute = ({ roles }) => {
   if (roles && !roles.includes(role)) {
     if (role === "superAdmin") return <Navigate to="/superadmin/home" replace />;
     if (role === "executive") return <Navigate to="/executive/home" replace />;
-    if (role === "bot") return <Navigate to="/tender/home" replace />;
+    if (role === "bot" || role === "tender_creator") return <Navigate to="/tender/home" replace />;
     return <Navigate to="/home" replace />;
   }
 

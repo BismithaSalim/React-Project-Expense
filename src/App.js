@@ -384,7 +384,7 @@ function AppContent() {
       </Route>
 
       {/* BOT & ADMIN/EDITOR/VIEWER tender routes */}
-      <Route element={<ProtectedRoute roles={["bot", "admin", "editor", "viewer"]} />}>
+      <Route element={<ProtectedRoute roles={["bot", "admin", "editor", "viewer","tender_creator"]} />}>
         <Route element={<MainLayout />}>
           {/* BOT dashboard */}
           <Route path="/tender/home" element={<BotDashboard />} />

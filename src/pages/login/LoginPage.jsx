@@ -484,6 +484,8 @@ const LoginPage = () => {
           navigate("/executive/home");
         } else if (role === "bot") {
           navigate("/tender/home");
+        }else if (role === "tender_creator") {
+          navigate("/tender/home");
         }
       } else {
         setSnackbar({
